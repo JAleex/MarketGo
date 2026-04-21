@@ -1,0 +1,23 @@
+services:
+  backend:
+    build: .
+    container_name: backend_marketgo
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    networks:
+      - RED_MARKETGO
+    restart: unless-stopped
+
+    deploy:
+      resources:
+        limits:
+          cpus: "3.0"
+          memory: 6g
+
+networks:
+  RED_MARKETGO:
+    external: true

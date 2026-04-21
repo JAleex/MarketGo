@@ -1,0 +1,21 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend_marketgo
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+      VITE_FRONT_END_URL: ${VITE_FRONT_END_URL}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - RED_MARKETGO
+    restart: unless-stopped
+
+networks:
+  RED_MARKETGO:
+    external: true
