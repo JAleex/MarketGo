@@ -1,0 +1,24 @@
+.ev-clean-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.ev-clean-row span {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Para textos largos como Objeto */
+.ev-clean-row--column {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.ev-clean-row--column strong {
+  margin-top: 4px;
+  line-height: 1.5;
+  color: #111827;
+}

@@ -1,0 +1,84 @@
+/* Fondo borroso de pantalla completa */
+.fullscreen-blur-rutas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Contenedor del contenido de carga */
+.loading-content-rutas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Contenedor para logo y anillo */
+.logo-ring-container-rutas {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Estilo del logo */
+.loading-logo-rutas {
+    object-fit: contain;
+    width: 200px;
+    height: 250px;
+    position: relative;
+    z-index: 1;
+    animation: pulse-rutas 2s infinite ease-in-out;
+}
+
+/* Anillo de carga circular */
+.loading-ring-rutas {
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #4285F4;
+    border-radius: 50%;
+    animation: spin-rutas 1.5s linear infinite;
+}
+
+/* Estilo del texto */
+.loading-text-rutas {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    animation: fadeInOut-rutas 2s infinite ease-in-out;
+}
+
+/* Animaciones */
+@keyframes pulse-rutas {
+    0% { transform: scale(0.98); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(0.98); }
+}
+
+@keyframes fadeInOut-rutas {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.8; }
+}
+
+@keyframes spin-rutas {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

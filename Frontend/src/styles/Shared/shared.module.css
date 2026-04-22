@@ -1,0 +1,159 @@
+/*====================== VARIABLES ==============================*/
+:root{
+  --tamañoH1 : 70px;
+  --tamañoH2 : 50px;
+  --tamañoH3 : 30px;
+}
+
+/*======================TITULOS ======================*/
+.tituloSeccion {
+  color: #003057;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(22px, 5vw, 70px);
+  font-weight: 700;
+}
+
+/*======================BOTONES DE ESTADOS ======================*/
+.estadoActivo {
+  background-color: #e6f6f2;
+  color: #0f5132;
+}
+.estadoInactivo {
+  background-color: #fdecea;
+  color: #842029;
+}
+.estadoAsignado {
+  background: #003057;
+  color: #ffff;
+}
+.estadoEvaluacion {
+  background: #FFC800;
+  color: #ffff;
+}
+.estadoFinalizado {
+  background: #6c757d;
+  color: #ffff;
+}
+.evCleanStateText {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/*======================BOTONES DE ENCABEZADOS ======================*/
+
+.btn-genericos {
+  border: none;
+  padding: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.btn-principal {
+  background: #1e3c72;
+  color: white;
+}
+.btn-principal:hover {
+  background: #172b4d;
+  box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+  color: white;
+  transform: scale(1.02);
+}
+
+.btn-deshabilitado{
+  border: none;
+  padding: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  background: #9c9c9c67;
+  color: rgb(255, 255, 255);
+  cursor: not-allowed;
+}
+
+.btn-secundario {
+  background: #76D7C4;
+  color: white;
+}
+.btn-secundario:hover {
+  background: #57a394;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+  color: white;
+}
+
+.btn-tercero {
+  background: #6c757d;
+  color: white;
+}
+.btn-tercero:hover {
+  background: #56595c;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+}
+
+.custom-button:focus-visible {
+  outline: 3px solid #1e3c72;
+  background: #172b4d;
+  color: white;
+  outline-offset: 3px;
+}
+
+/*====================== FUENTES DE TEXTOS ======================*/
+
+.textosH1Azul{
+  color: #003057;
+  font-family: 'Poppins';
+  font-size: var(--tamañoH1);
+}
+.textosH1Gris{
+  color: #626161;
+  font-family: 'Poppins';
+  font-size: var(--tamañoH1);
+}
+
+.textosH1Negro{
+  color: #000000;
+  font-family: 'Poppins';
+  font-size: var(--tamañoH1);
+}
+
+.textosH2Azul{
+  color: #003057;
+  font-size: var(--tamañoH2);
+  font-family: 'Poppins'; 
+}
+
+.textosH2Gris{
+  color: #626161;
+  font-size: var(--tamañoH2);
+  font-family: 'Poppins';  
+}
+
+.textosH2Negro{
+  color: #000000;
+  font-size: var(--tamañoH2);
+  font-family: 'Poppins';  
+}
+
+.textosH3Azul{
+  color: #003057;
+  font-size: var(--tamañoH3);
+  font-family: 'Poppins';  
+}
+.textosH3Gris{
+  color: #626161;
+  font-size: var(--tamañoH3);
+  font-family: 'Poppins';  
+}
+
+.textosH3Negro{
+  color: #000000;
+  font-size: var(--tamañoH3);
+  font-family: 'Poppins';  
+}
+

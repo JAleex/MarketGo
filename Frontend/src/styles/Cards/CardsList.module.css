@@ -1,0 +1,282 @@
+.title { font-size: 22px; margin-bottom: 16px; }
+
+/* ===== Filtros ===== */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: #ffffff;
+  padding: 14px 16px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  overflow-x: scroll;
+  scrollbar-width: thin;
+}
+
+.filtersGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; 
+  gap: 12px 20px;
+  align-items: end;
+}
+
+.search,
+.filtersGrid select,
+.dateFilters input {
+  width: 100%;
+  height: 40px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.dateFilters {
+  grid-column: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filtersButtons {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.dateFilters input {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  font-size: 13px;
+}
+
+.clearFilters {
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.clearFilters:hover {
+  background: #f3f4f6;
+}
+
+@media (max-width: 768px) {
+  .filtersGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .filtersButtons {
+    justify-content: flex-start;
+  }
+}
+
+
+/* ===== Contenido ===== */
+
+.search {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 16px;
+}
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.06);
+  border-top: 4px solid #1e3c72;
+  min-height: 0;   
+  width: 100%;
+  max-width: 100%;    
+}
+
+.cardContent {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-shrink: 0;   
+}
+
+/* ===== Botones de Iconos - Estilo Proponentes ===== */
+.iconButtons {
+  display: flex;
+  flex-wrap: wrap;   
+  gap: 10px;
+  align-items: center;
+}
+
+/* Botones de iconos - Estilo base (igual a mod-acciones .btn) */
+.iconButtons button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.iconButtons button[title="Ver"] {
+  background-color: #f0f4f8;
+  color: #172b4d;
+}
+
+.iconButtons button[title="Ver"]:hover {
+  background-color: #172b4d;
+  color: white;
+}
+
+.iconButtons button[title="Editar"] {
+  background-color: #e8f0fe;
+  color: #1e3c72;
+}
+
+.iconButtons button[title="Editar"]:hover {
+  background-color: #1e3c72;
+  color: white;
+}
+
+.iconButtons button[title="Desactivar"] {
+  background-color: #e8f6f3;
+  color: #172b4d;
+}
+
+.iconButtons button[title="Desactivar"]:hover {
+  background-color: #76D7C4;
+  color: #0e6251;
+}
+
+.iconButtons button[title="Activar"] {
+  background-color: #e8f6f3;
+  color: #e74c3c;
+}
+
+.iconButtons button[title="Activar"]:hover {
+  background-color: #f5b7b1;
+  color: #7b241c;
+}
+
+.personalizedButton {
+  padding: 8px 14px;
+  border: none;
+}
+
+.danger { color: #dc2626; }
+
+.active {
+  color: #172b4d; 
+}
+
+.inactive {
+  color: #e74c3c; 
+}
+
+/* ===== Paginación ===== */
+
+.pagination {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.pageButton {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.pageButton:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.pageButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6c757d;
+}
+
+.emptyState i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    opacity: 0.6;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 576px) {
+  .iconButtons button {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+
+@media (max-width: 768px) {
+
+  .list {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 14px;
+    min-height: 200px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .iconButtons {
+    justify-content: center;
+  }
+
+  .personalizedButton {
+    width: 100%;
+  }
+}

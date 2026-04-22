@@ -1,0 +1,282 @@
+/* Contenedor principal */
+.login-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Contenedor azul oscuro (fondo) - lado izquierdo */
+.login-background {
+    flex: 1;
+    background-color: #003057;
+    /* Fondo azul oscuro - color de Evaluación Proponentes */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Líneas curvas en la parte inferior izquierda */
+.login-background::before,
+.login-background::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 750px;
+    height: 750px;
+    background: transparent;
+    border-radius: 50%;
+    border: 10px solid rgba(7, 126, 241, 0.3);
+}
+
+.login-background::before {
+    transform: translate(-50%, 50%) rotate(45deg);
+}
+
+.login-background::after {
+    transform: translate(-20%, 50%) rotate(-45deg);
+}
+
+/* Contenedor de la imagen del logo */
+.login-image-header {
+    width: 70%;
+    height: 70%;
+    background-image: url('/Imagenes/LOGOREGIS.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0) invert(1);
+}
+
+/* Contenedor blanco con el formulario - lado derecho */
+.login-card {
+    flex: 1;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 8vh;
+}
+
+.login-image {
+    width: 30%;
+    height: 30%;
+    background-image: url('/Imagenes/LOGOREGIS.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.login-text {
+    font-size: 4vh;
+    margin-top: -4.5vh;
+    color: #003057;
+    font-weight: bold;
+}
+
+.login-title {
+    margin-top: 7vh;
+}
+
+/* Estilos para los contenedores de los inputs */
+.login-inputs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los labels */
+.login-inputs label {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+    padding-left: 15px;
+}
+
+/* Estilos para los inputs con iconos */
+.input-with-icon {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    top: 35%;
+    transform: translateY(-50%);
+    color: #9e9e9e;
+    font-size: 20px;
+}
+
+.login-input {
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    padding: 10px 10px 10px 40px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    width: 100%;
+    font-size: 16px;
+}
+
+.login-input:focus {
+    border-color: #003057;
+    box-shadow: 0 0 8px rgba(0, 48, 87, 0.3);
+}
+
+.login-button {
+    background: #003057;
+    border: none;
+    border-radius: 30px;
+    padding: 12px;
+    font-weight: 600;
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+    color: white;
+    width: 30vh;
+}
+
+.login-button:hover {
+    background: #002040;
+    transform: scale(1.05);
+}
+
+.textpass {
+    color: #868585;
+}
+
+/* Estilos para el ícono de ojo */
+.password-toggle-icon {
+    position: absolute;
+    right: 15px;
+    top: 35%;
+    transform: translateY(-50%);
+    color: #9e9e9e;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.password-toggle-icon:hover {
+    color: #003057;
+}
+
+/* Versión del sistema */
+.version-text-login {
+    color: #9e9d9d;
+    position: fixed; 
+    bottom: 15px;
+    right: 25px;
+    font-size: 12px;
+    opacity: 0.7;
+    z-index: 100;
+}
+
+/* Media queries para tablet */
+@media screen and (min-width: 1024px) and (max-width: 1024px) {
+    .login-background::before,
+    .login-background::after {
+        width: 450px;
+        height: 500px;
+    }
+}
+
+/* Media queries para móviles */
+@media screen and (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .login-background {
+        flex: none;
+        width: 100%;
+        height: 35vh;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-background::before,
+    .login-background::after {
+        content: "";
+        position: absolute;
+        width: 150%;
+        height: 80px;
+        left: -25%;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 100% 100% 0 0;
+        z-index: 0;
+    }
+
+    .login-background::before {
+        top: -40px;
+        transform: rotate(-2deg);
+    }
+
+    .login-background::after {
+        bottom: -40px;
+        transform: rotate(2deg);
+    }
+
+    .login-background {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .login-background .login-image-header,
+    .login-background .login-image,
+    .login-background .login-text {
+        position: relative;
+        z-index: 2;
+    }
+
+    .login-image-header {
+        width: 50%;
+        height: 50%;
+        margin: 0 auto;
+    }
+
+    .login-card {
+        flex: none;
+        width: 100%;
+        padding: 5vh 5vw;
+        align-items: center;
+    }
+
+    .login-image {
+        width: 25%;
+        height: 25%;
+        margin-top: 2vh;
+    }
+
+    .login-text {
+        font-size: 3vh;
+        margin-bottom: 1vh;
+        text-align: center;
+        font-size: 40px;
+    }
+
+    .login-title {
+        margin-top: 20px;
+        font-size: 2.5vh;
+    }
+
+    .login-inputs {
+        width: 100%;
+        margin-top: 40px;
+    }
+
+    .login-button {
+        width: 100%;
+    }
+
+    .textpass {
+        font-size: 2vh;
+    }
+}
