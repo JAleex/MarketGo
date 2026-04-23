@@ -63,12 +63,10 @@
 }
 
 .logo-img {
-    max-width: 100%; 
-    height: auto;
-    border-radius: 8px;
-    display: block;
-    margin: 0 auto; 
-    transition: max-width 0.3s ease; 
+    position: relative;
+    max-width: 100%;
+    right: 30%;
+    top: 20%;
 }
 
 .navbar-divider {

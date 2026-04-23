@@ -96,6 +96,7 @@ class Vista(models.Model):
     pk_vista = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
     ruta = models.CharField(max_length=200, unique=True)
+    icono = models.CharField(max_length=100, null=True)
     fk_estado = models.ForeignKey(Estado, models.DO_NOTHING, db_column='fk_estado')
     visible_en_navbar = models.BooleanField(default=True)
     

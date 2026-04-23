@@ -51,12 +51,12 @@ const Navbar: React.FC<NavbarProps> = ({ isNavbarVisible, toggleNavbar }) => {
     if (navbarVisible !== isNavbarVisible) toggleNavbar();
   }, []);
 
-  // 🔥 GENERAR MENÚ DINÁMICO DESDE PERMISOS DEL ROL
+  // GENERAR MENÚ DINÁMICO DESDE PERMISOS DEL ROL
   const navItems = useMemo(() => {
     if (loading || vistas.length === 0) return null;
-
+    
     return vistas
-      .filter(v => v.tiene_acceso) // 🔐 SOLO PERMISOS ACTIVOS
+      .filter(v => v.tiene_acceso) //SOLO PERMISOS ACTIVOS
       .map(v => {
         const rutaBase = v.ruta_vista;
         const isActive = location.pathname.startsWith(rutaBase);
@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ isNavbarVisible, toggleNavbar }) => {
         return (
           <li key={v.pk_permiso_rol} className={`nav-item ${isActive ? "active" : ""}`}>
             <Link className="nav-link" to={rutaBase}>
-              <i className={`bi ${ICONS.DEFAULT}`}></i>
+               <i className={`bi ${v.icono || ICONS.DEFAULT}`}></i>
               <span className={`nav-text ${isNavbarVisible ? "visible" : "hidden"}`}>
                 {v.nombre_vista}
                 <i className={`bi ${ICONS.ARROW} nav-arrow`}></i>

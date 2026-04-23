@@ -5,6 +5,7 @@ export interface PermisoRol {
   fk_rol: number;
   nombre_rol: string;
   fk_vista: number;
+  icono: string;
   nombre_vista: string;
   ruta_vista: string;
   tiene_acceso: boolean;
@@ -12,7 +13,7 @@ export interface PermisoRol {
 
 export const obtenerPermisosRol = async (): Promise<PermisoRol[]> => {
   const response = await api.get("/usuarios/permisos-rol/");
-  return response.data;
+  return response.data.data;
 };
 
 export const actualizarPermisosMasivo = async (permisos: PermisoRol[]) => {

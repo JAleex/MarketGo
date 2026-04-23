@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import api from "../api";
+import { Alerts } from "../components/Alertas/alertas";
+import { useNavigate } from "react-router-dom";
 
 type Vista = {
   pk_permiso_rol: number;
@@ -7,6 +9,7 @@ type Vista = {
   nombre_vista: string;
   ruta_vista: string;
   tiene_acceso: boolean;
+  icono: string;
 };
 
 type RolPermisos = {
@@ -27,7 +30,7 @@ type AuthContextType = {
   vistas: Vista[];
   isAuthenticated: boolean;
   loading: boolean;
-  login: (data: any) => Promise<void>;
+  login: (usuario: any, password: any) => Promise<void>;
   logout: () => Promise<void>;
   hasPermission: (ruta: string) => boolean;
 };
@@ -47,12 +50,71 @@ export const AuthProvider = ({ children }: any) => {
     checkAuth: `${API_URL}/usuarios/chequeo-autenticacion/`,
     perfilUsuario: `${API_URL}/usuarios/perfil-usuario/`,
   } as const;
+  const navigate = useNavigate();
 
   // LOGIN 
-  const login = async (correo: string, password: string) => {
-    const res = await api.post(ENDPOINTS.login, { correo, password }, { withCredentials: true });
-    await loadUserData();
-  };
+const login = async (correo: string, password: string) => {
+  try {
+    setLoading(true);
+
+    const res = await api.post(
+      ENDPOINTS.login,
+      { correo, password },
+      { withCredentials: true }
+    );
+
+    const user = res.data?.data;
+
+    if (!user) {
+      throw new Error("Respuesta inválida del servidor");
+    }
+
+    if (user.fk_estado !== 1) {
+      throw new Error("Usuario inactivo");
+    }
+
+    // 🔥 cargar usuario + vistas
+    const { userData, vistasRol } = await loadUserDataAndReturn();
+
+    setUser(userData);
+    setVistas(vistasRol);
+
+    // 🔥 REDIRECCIÓN SIMPLE
+    const primeraRuta = vistasRol.find(v => v.tiene_acceso)?.ruta_vista;
+
+    if (primeraRuta) {
+      navigate(primeraRuta);
+    } else {
+      navigate("/login");
+    }
+
+  } catch (error: any) {
+    const message =
+      error?.response?.data?.message ||
+      error.message ||
+      "Credenciales incorrectas";
+
+    Alerts.error(message);
+  } finally {
+    setLoading(false);
+  }
+};
+  
+
+const loadUserDataAndReturn = async () => {
+  const userRes = await api.get(ENDPOINTS.perfilUsuario, {
+    withCredentials: true,
+  });
+  const userData = userRes.data;
+
+  const rolesRes = await api.get("/usuarios/roles-permisos/");
+  const roles: RolPermisos[] = rolesRes.data;
+
+  const rolUsuario = roles.find(r => r.pk_rol === userData.fk_rol);
+  const vistasRol = rolUsuario?.vistas || [];
+
+  return { userData, vistasRol };
+};
 
   // LOGOUT
   const logout = async () => {

@@ -17,19 +17,22 @@ const PermisosAdmin: React.FC = () => {
     cargarPermisos();
   }, []);
 
-  const cargarPermisos = async () => {
-    try {
-      setLoading(true);
-      const data = await obtenerPermisosRol();
-      setPermisos(data);
-      setPermisosOriginales(data);
-    } catch (err) {
-      console.error(err);
-      setError("Error al cargar permisos");
-    } finally {
-      setLoading(false);
-    }
-  };
+const cargarPermisos = async () => {
+  try {
+    setLoading(true);
+
+    const response = await obtenerPermisosRol();
+
+    setPermisos(response);
+    setPermisosOriginales(response);
+
+  } catch (err) {
+    console.error(err);
+    setError("Error al cargar permisos");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const permisosPorRol = useMemo(() => {
     const grouped: Record<string, PermisoRol[]> = {};
@@ -79,34 +82,18 @@ const PermisosAdmin: React.FC = () => {
   if (loading) return <p>Cargando permisos...</p>;
   if (error) return <p>{error}</p>;
 
-  return (
-    <div className="container mt-4">
-      <h2>Gestión de Permisos por Rol</h2>
-
-      <div className="mb-3 d-flex gap-2">
-        <button
-          className="btn btn-success"
-          onClick={guardarCambios}
-          disabled={!hayCambios || guardando}
-        >
-          {guardando ? "Guardando..." : "Guardar cambios"}
-        </button>
-
-        <button
-          className="btn btn-secondary"
-          onClick={resetCambios}
-          disabled={!hayCambios}
-        >
-          Cancelar cambios
-        </button>
-      </div>
+return (
+    <div className="mt-4">
+      <h2 className="mb-4">Gestión de Permisos por Rol</h2>
 
       {Object.entries(permisosPorRol).map(([rol, lista]) => (
-        <div key={rol} className="mb-4">
-          <h4 className="mt-3">{rol}</h4>
+        <div key={rol} className="card mb-4 shadow-sm">
+          <div className="card-header bg-dark text-white">
+            <strong>{rol}</strong>
+          </div>
 
-          <table className="table table-bordered table-hover">
-            <thead className="table-dark">
+          <table className="table table-hover mb-0">
+            <thead>
               <tr>
                 <th>Vista</th>
                 <th>Ruta</th>
@@ -117,8 +104,13 @@ const PermisosAdmin: React.FC = () => {
             <tbody>
               {lista.map((permiso) => (
                 <tr key={permiso.pk_permiso_rol}>
-                  <td>{permiso.nombre_vista}</td>
+                  <td>
+                    <i className={`bi ${permiso.icono || "bi-circle"} me-2`} />
+                    {permiso.nombre_vista}
+                  </td>
+
                   <td>{permiso.ruta_vista}</td>
+
                   <td className="text-center">
                     <input
                       type="checkbox"
@@ -135,7 +127,6 @@ const PermisosAdmin: React.FC = () => {
         </div>
       ))}
     </div>
-  );
-};
-
+);
+}
 export default PermisosAdmin;

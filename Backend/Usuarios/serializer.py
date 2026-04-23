@@ -80,6 +80,7 @@ class VistaSerializer(serializers.ModelSerializer):
             'fk_estado',
             'estado',
             'visible_en_navbar',
+            'icono'
         ]
 
     def validate_nombre(self, value):
@@ -110,6 +111,7 @@ class PermisoRolSerializer(serializers.ModelSerializer):
     nombre_rol = serializers.CharField(source='fk_rol.nombre_rol', read_only=True)
     nombre_vista = serializers.CharField(source='fk_vista.nombre', read_only=True)
     ruta_vista = serializers.CharField(source='fk_vista.ruta', read_only=True)
+    icono = serializers.CharField(source='fk_vista.icono', read_only=True)
 
     class Meta:
         model = PermisoRol
@@ -120,7 +122,8 @@ class PermisoRolSerializer(serializers.ModelSerializer):
             'fk_vista',
             'nombre_vista',
             'ruta_vista',
-            'tiene_acceso'
+            'tiene_acceso',
+            'icono'
         ]
 
 
@@ -140,6 +143,7 @@ class RolConPermisosSerializer(serializers.ModelSerializer):
                 "fk_vista": p.fk_vista.pk_vista,
                 "nombre_vista": p.fk_vista.nombre,
                 "ruta_vista": p.fk_vista.ruta,
+                "icono": p.fk_vista.icono,
                 "tiene_acceso": p.tiene_acceso,
             }
             for p in permisos

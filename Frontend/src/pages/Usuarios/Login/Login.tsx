@@ -18,77 +18,80 @@ const Login: React.FC = () => {
             <PantallaCarga isLoading={Cargando} />
             <div className="login-container">
                 {/* Lado izquierdo - Fondo azul con logo */}
+                <div className="login-text">
+                        <h1>MARKET GO</h1>
+                </div>
                 <div className="login-background">
-                    <div className="login-image-header"></div>
+                    <div className="login-image-header">
+                        <img src="/images/silueta_leopardo.webp" alt="Logo" className="logo-img"/>
+                    </div>
                 </div>
 
                 {/* Lado derecho - Formulario */}
-                <div className="login-card">
-                    <div className="login-image"></div>
-                    <div className="login-text">MarketGo</div>
-
+                <div className="login-card">    
                     <h4 className="login-title">Iniciar Sesión</h4>
+                    <div className="recuadro-login">
 
                     <form onSubmit={(e) => e.preventDefault()} autoComplete="off" className="needs-validation" noValidate>
                         <div className="login-inputs">
-                            <label htmlFor="correo">Correo / Usuario</label>
-                            <div className="input-with-icon">
-                                <FaRegUser className="input-icon" />
-                                <input
-                                    type="text"
-                                    className="login-input"
-                                    id="correo"
-                                    name="correo"
-                                    value={formData.correo}
-                                    onChange={handleChange}
-                                    placeholder="Correo@registraduria.gov.co / Usuario"
-                                    autoComplete="off" 
-                                    required
-                                />
-                            </div>
+                                <label htmlFor="correo">Correo / Usuario</label>
+                                <div className="input-with-icon">
+                                    <FaRegUser className="input-icon" />
+                                    <input
+                                        type="text"
+                                        className="login-input"
+                                        id="correo"
+                                        name="correo"
+                                        value={formData.correo}
+                                        onChange={handleChange}
+                                        placeholder="Correo@registraduria.gov.co / Usuario"
+                                        autoComplete="off" 
+                                        required
+                                    />
+                                </div>
 
-                            <label htmlFor="password">Contraseña</label>
-                            <div className="input-with-icon">
-                                <RiLockPasswordFill className="input-icon" />
-                                <input
-                                    type={showPassword ? "text" : "password"}
-                                    className="login-input"
-                                    id="password"
-                                    name="password"
-                                    value={formData.password}
-                                    onChange={handleChange}
-                                    placeholder="Contraseña"
-                                    autoComplete="off" 
-                                    required
-                                />
-                                <div
-                                    className="password-toggle-icon"
-                                    onClick={() => setShowPassword(!showPassword)}
-                                >
-                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                <label htmlFor="password">Contraseña</label>
+                                <div className="input-with-icon">
+                                    <RiLockPasswordFill className="input-icon" />
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        className="login-input"
+                                        id="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        placeholder="Contraseña"
+                                        autoComplete="off" 
+                                        required
+                                    />
+                                    <div
+                                        className="password-toggle-icon"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                    >
+                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <button
-                            type="button"
-                            onClick={handleSubmit}
-                            className="login-button mb-2"
-                        >
-                            Iniciar Sesión
-                        </button>
-
-                        <div className="text-center mt-4">
-                            <span
-                                className="textpass"
-                                style={{ cursor: "pointer" }}
-                                onClick={() => navigate("/recuperar_contrasena")}
+                            <button
+                                type="button"
+                                onClick={handleSubmit}
+                                className="login-button mb-2"
                             >
-                                ¿Olvidó su Contraseña?
-                            </span>
-                        </div>
-                    </form>
-                    
+                                Iniciar Sesión
+                            </button>
+
+                            <div className="text-center mt-4">
+                                <span
+                                    className="textpass"
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => navigate("/recuperar_contrasena")}
+                                >
+                                    ¿Olvidó su Contraseña?
+                                </span>
+                            </div>
+                        </form>
+                    </div>
                     <div className="version-text-login">v1.0.0</div>
                 </div>
             </div>
