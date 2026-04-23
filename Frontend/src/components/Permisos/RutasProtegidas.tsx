@@ -20,7 +20,6 @@ const RutasProtegidas: React.FC<ProtectedRouteProps> = ({ children, ruta }) => {
 
   const rutaActual = ruta || location.pathname;
 
-  // 🟢 PERMITIR LOGIN SIN VALIDACIÓN
   if (location.pathname === "/login") {
     return <>{children}</>;
   }

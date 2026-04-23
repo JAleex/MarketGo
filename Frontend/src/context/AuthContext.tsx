@@ -40,14 +40,21 @@ export const AuthProvider = ({ children }: any) => {
   const [loading, setLoading] = useState(true);
 
   const isAuthenticated = !!user;
+  const API_URL = import.meta.env.VITE_API_URL;
+  const ENDPOINTS = {
+    login: `${API_URL}/usuarios/token/`,
+    logout: `${API_URL}/usuarios/logout/`,
+    checkAuth: `${API_URL}/usuarios/chequeo-autenticacion/`,
+    perfilUsuario: `${API_URL}/usuarios/perfil-usuario/`,
+  } as const;
 
-  // 🔥 LOGIN (usa tu endpoint real)
-  const login = async (credentials: any) => {
-    await api.post("/usuarios/token/", credentials);
+  // LOGIN 
+  const login = async (correo: string, password: string) => {
+    const res = await api.post(ENDPOINTS.login, { correo, password }, { withCredentials: true });
     await loadUserData();
   };
 
-  // 🔥 LOGOUT
+  // LOGOUT
   const logout = async () => {
     try {
       localStorage.setItem("loggingOut", "true");
@@ -62,18 +69,18 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  // 🔥 CARGAR USUARIO + PERMISOS POR ROL
+  // CARGAR USUARIO + PERMISOS POR ROL
   const loadUserData = async () => {
     try {
-      // 👤 usuario
-      const userRes = await api.get("/usuarios/perfil-usuario/");
+      // usuario
+      const userRes = await api.get(ENDPOINTS.perfilUsuario, { withCredentials: true });
       const userData = userRes.data;
 
-      // 🔐 todos los roles con permisos
+      // todos los roles con permisos
       const rolesRes = await api.get("/usuarios/roles-permisos/");
       const roles: RolPermisos[] = rolesRes.data;
 
-      // 🎯 encontrar el rol del usuario
+      // encontrar el rol del usuario
       const rolUsuario = roles.find(r => r.pk_rol === userData.fk_rol);
 
       setUser(userData);
@@ -87,7 +94,7 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  // 🔐 VALIDAR PERMISOS (SOLO POR ROL)
+  //  VALIDAR PERMISOS (SOLO POR ROL)
 const hasPermission = (ruta: string) => {
   const rutaBase = ruta.split("/").slice(0, 2).join("/");
 
@@ -96,7 +103,7 @@ const hasPermission = (ruta: string) => {
   );
 };
 
-  // 🔁 CHECK AUTH INICIAL
+  // CHECK AUTH INICIAL
   useEffect(() => {
     const initAuth = async () => {
       try {

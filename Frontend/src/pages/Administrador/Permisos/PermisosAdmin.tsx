@@ -44,12 +44,10 @@ const PermisosAdmin: React.FC = () => {
     return grouped;
   }, [permisos]);
 
-  // 🔥 Detectar cambios
   const hayCambios = useMemo(() => {
     return JSON.stringify(permisos) !== JSON.stringify(permisosOriginales);
   }, [permisos, permisosOriginales]);
 
-  // 🔥 Toggle permiso
   const handleToggle = (pk: number) => {
     setPermisos((prev) =>
       prev.map((p) =>
@@ -60,7 +58,6 @@ const PermisosAdmin: React.FC = () => {
     );
   };
 
-  // 🔥 Guardar
   const guardarCambios = async () => {
     try {
       setGuardando(true);
@@ -75,7 +72,6 @@ const PermisosAdmin: React.FC = () => {
     }
   };
 
-  // 🔥 Reset cambios
   const resetCambios = () => {
     setPermisos(permisosOriginales);
   };
@@ -87,7 +83,6 @@ const PermisosAdmin: React.FC = () => {
     <div className="container mt-4">
       <h2>Gestión de Permisos por Rol</h2>
 
-      {/* 🔥 Botones */}
       <div className="mb-3 d-flex gap-2">
         <button
           className="btn btn-success"
@@ -106,7 +101,6 @@ const PermisosAdmin: React.FC = () => {
         </button>
       </div>
 
-      {/* 🔥 TABLAS POR ROL */}
       {Object.entries(permisosPorRol).map(([rol, lista]) => (
         <div key={rol} className="mb-4">
           <h4 className="mt-3">{rol}</h4>

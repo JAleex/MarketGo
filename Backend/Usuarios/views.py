@@ -165,7 +165,6 @@ class getPerfilUsuarioView(APIView):
             'usuario': user.usuario,
             'correo': user.correo,
             'nombre': user.nombre,
-            'apellido': user.apellido,
             'numero_identificacion': user.numero_identificacion,
             'telefono':user.telefono,
             'fk_rol' : user.fk_rol.pk_rol if user.fk_rol else None,

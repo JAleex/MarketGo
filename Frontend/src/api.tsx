@@ -70,34 +70,49 @@ api.interceptors.response.use(
         }
 
         if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
-            originalRequest._retry = true;
 
-            if (isRefreshing) {
-                return new Promise((resolve, reject) => {
-                    failedQueue.push({ resolve, reject });
-                }).then(() => api(originalRequest));
-            }
+        const isAuthRoute =
+            originalRequest.url?.includes('/token/') ||
+            originalRequest.url?.includes('/chequeo-autenticacion/');
 
-            isRefreshing = true;
-
-            try {
-                await axios.post(
-                    `${import.meta.env.VITE_API_URL}/usuarios/token/refresh/`,
-                    {},
-                    { withCredentials: true }
-                );
-                isRefreshing = false;
-                processQueue(null);
-                return api(originalRequest);
-            } catch (refreshError) {
-                isRefreshing = false;
-                processQueue(refreshError, null);
-                window.location.href = '/login';
-                return Promise.reject(refreshError);
-            }
+        if (isAuthRoute || window.location.pathname === "/login") {
+            return Promise.reject(error);
         }
 
-        return Promise.reject(error);
+        originalRequest._retry = true;
+
+        if (isRefreshing) {
+            return new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject });
+            }).then(() => api(originalRequest));
+        }
+
+        isRefreshing = true;
+
+        try {
+            await axios.post(
+            `${import.meta.env.VITE_API_URL}/usuarios/token/refresh/`,
+            {},
+            { withCredentials: true }
+            );
+
+            isRefreshing = false;
+            processQueue(null);
+
+            return api(originalRequest);
+
+        } catch (refreshError) {
+            isRefreshing = false;
+            processQueue(refreshError, null);
+
+            
+            if (window.location.pathname !== "/login") {
+            window.location.href = "/login";
+            }
+
+            return Promise.reject(refreshError);
+        }
+        }
     }
 );
 

@@ -37,7 +37,6 @@ class CustomTokenObtainPairSerializer(serializers.Serializer):
             "user": {
                 "pk_usuario": user.pk_usuario,
                 "nombre": user.nombre,
-                "apellido": user.apellido,
                 "correo": user.correo,
                 "fk_rol": user.fk_rol.pk_rol,
                 "fk_estado": user.fk_estado.pk,
@@ -54,8 +53,6 @@ class EstadosSerializer(serializers.ModelSerializer):
 
 class MiPerfilSerializer(serializers.ModelSerializer):
     rol = serializers.CharField(source="fk_rol.nombre_rol", read_only=True)
-    tipo_documento = serializers.CharField(source="fk_tipo_documento.sigla", read_only=True)
-    tipo_documento_completo = serializers.CharField(source="fk_tipo_documento.descripcion", read_only=True)
     estado = serializers.CharField(source="fk_estado.nombre", read_only=True)
     
     class Meta:
@@ -64,11 +61,8 @@ class MiPerfilSerializer(serializers.ModelSerializer):
             "pk_usuario",
             "usuario",
             "numero_identificacion",
-            "tipo_documento",
-            "tipo_documento_completo",
             "correo",
             "nombre",
-            "apellido",
             "telefono",
             "rol",
             "estado",
