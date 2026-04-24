@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Login from "./pages/Usuarios/Login/Login";
+import Registro from "./pages/Usuarios/Registro/Registro";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RutasProtegidas from "./components/Permisos/RutasProtegidas";
 import PermisosAdmin from "./pages/Administrador/Permisos/PermisosAdmin";
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Routes>
 
           <Route path="/login" element={<Login />} />
+          <Route path="/registro" element={<Registro />} />
 
           <Route
             element={
