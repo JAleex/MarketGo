@@ -53,11 +53,11 @@
 }
 
 .btn-principal {
-  background: #1e3c72;
+  background: #000000;
   color: white;
 }
 .btn-principal:hover {
-  background: #172b4d;
+  background: #3f3f3f;
   box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
   color: white;
   transform: scale(1.02);

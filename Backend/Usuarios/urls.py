@@ -22,4 +22,5 @@ urlpatterns = [
     path('permisos-rol/actualizar/', PermisoRolUpdateView.as_view(), name='permisos-rol-update'),
     path('permisos-rol/bulk/', PermisoRolBulkUpdateView.as_view(), name='permisos-rol-bulk'),
     path('roles-permisos/', RolesConPermisosView.as_view(), name='roles-permisos'),
+    path('crear-usuario/', RegistroNuevoUsuario.as_view(), name='crear-usuario')
 ]

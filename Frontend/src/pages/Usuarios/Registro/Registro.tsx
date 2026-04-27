@@ -102,13 +102,13 @@ const Registro: React.FC = () => {
                                         {showPassword ? <FaEyeSlash /> : <FaEye />}
                                     </div>
                                 </div>
-                                <label htmlFor="passwordconfirmed">Confirmar Contraseña</label>
+                                <label htmlFor="passwordConfirm">Confirmar Contraseña</label>
                                 <div className="input-with-icon">
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         className="login-input"
-                                        id="passwordconfirmed"
-                                        name="passwordconfirmed"
+                                        id="passwordConfirm"
+                                        name="passwordConfirm"
                                         value={formData.passwordConfirm}
                                         onChange={handleChange}
                                         placeholder="Contraseña"

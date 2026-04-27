@@ -89,7 +89,7 @@ const Navbar: React.FC<NavbarProps> = ({ isNavbarVisible, toggleNavbar }) => {
         {isNavbarVisible && (
           <div className="navbar-logo">
             <img
-              src={`${import.meta.env.BASE_URL}Imagenes/Logo_regis_NEGRO.png`}
+              src={`/images/silueta_leopardo.webp`}
               alt="Logo"
               className="logo-img"
             />

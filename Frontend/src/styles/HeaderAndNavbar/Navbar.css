@@ -64,9 +64,16 @@
 
 .logo-img {
     position: relative;
-    max-width: 100%;
-    right: 30%;
-    top: 20%;
+    max-width: 90%;
+    right: 5%;
+    top: 10%;
+}
+
+.logo-img-login{
+    position: relative;
+    max-width: 90%;
+    right: 25%;
+    top: 30%;
 }
 
 .navbar-divider {
@@ -132,7 +139,7 @@
 }
 
 .nav-item:hover {
-    background-color: #003057 ;
+    background-color: #9e9e9e ;
     border-radius: 8px;
     transform: scale(1.01);
 }
@@ -157,7 +164,7 @@
     margin-top: 30px;
 }
 .nav-item.active {
-    background-color: #003057; 
+    background-color: #464646; 
     border-radius: 8px;
     transform: scale(1.01);
 }

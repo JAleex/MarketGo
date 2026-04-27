@@ -456,3 +456,44 @@ class ResetearPasswordAPIView(APIView):
            
         except Exception as e:
             return Response({"error": "Error al procesar la solicitud"}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class RegistroNuevoUsuario(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        data = request.data
+        
+        # Validar campos obligatorios
+        required_fields = ['usuario', 'correo', 'password', 'nombre']
+        for field in required_fields:
+            if not data.get(field):
+                return api_response(f"El campo {field} es obligatorio", "error", status.HTTP_400_BAD_REQUEST)
+
+        # Verificar si el usuario o correo ya existen
+        if Usuarios.objects.filter(Q(usuario=data['usuario']) | Q(correo=data['correo'])).exists():
+            return api_response("El usuario o correo ya se encuentra registrado", "error", status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # Obtener rol por defecto (ej: Cliente/Usuario con pk=2) y estado activo (pk=1)
+            rol_defecto = Rol.objects.get(pk_rol=2)
+            estado_activo = Estado.objects.get(pk_estado=1)
+
+            nuevo_usuario = Usuarios.objects.create(
+                usuario=data['usuario'],
+                correo=data['correo'],
+                nombre=data['nombre'],
+                fk_rol=rol_defecto,
+                fk_estado=estado_activo
+            )
+            nuevo_usuario.set_password(data['password'])
+            nuevo_usuario.save()
+
+            return api_response(
+                "Usuario registrado exitosamente",
+                data={"pk_usuario": nuevo_usuario.pk_usuario, "usuario": nuevo_usuario.usuario},
+                http_status=status.HTTP_201_CREATED
+            )
+
+        except Exception as e:
+            return api_response(f"Error al registrar usuario: {str(e)}", "error", status.HTTP_500_INTERNAL_SERVER_ERROR)

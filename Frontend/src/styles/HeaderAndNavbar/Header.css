@@ -2,15 +2,14 @@
     position: relative;
     width: 100%;
     min-height: 150px;
-    height: 30vh;
+    height: 1vh;
     max-height: 200px;
-    background-image: url('/Imagenes/fachada_regis.jpg');
     background-size: cover;
     background-position: 50% 38%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: rgb(0, 0, 0);
     text-align: center;
     z-index: 900;
     transition: margin-left 0.3s ease, width 0.3s ease;
@@ -22,7 +21,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #002645a1; 
+    background-color: #F3D631; 
     display: flex;
     align-items: center;
     justify-content: center;

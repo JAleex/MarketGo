@@ -16,7 +16,7 @@ interface LoadingScreenProps {
                     <div className="logo-ring-container-rutas">
                         <div className="loading-ring-rutas"></div>
                         <img 
-                            src={`${import.meta.env.BASE_URL}Imagenes/Logo_regis_NEGRO.png`}
+                            src={`/images/silueta_leopardo.webp`}
                             alt="Logo"
                             className="loading-logo-rutas"
                             style={{ width: '200px', height: '250px' }}

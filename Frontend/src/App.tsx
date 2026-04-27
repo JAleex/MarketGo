@@ -5,10 +5,13 @@ import Registro from "./pages/Usuarios/Registro/Registro";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RutasProtegidas from "./components/Permisos/RutasProtegidas";
 import PermisosAdmin from "./pages/Administrador/Permisos/PermisosAdmin";
+import HomePage from "./pages/Clientes/HomePage/HomePage";
 import LayoutPrincipal from "./components/LayoutPrincipal/LayoutPrincipal";
 
 const rutas: Record<string, React.ComponentType> = {
   "/accesos": PermisosAdmin,
+  "/inicio": HomePage,
+
 };
 
 const App: React.FC = () => {

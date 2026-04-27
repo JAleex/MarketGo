@@ -37,7 +37,7 @@ interface InputOptions {
 }
 
 const baseConfig = {
-  confirmButtonColor: "#003057",
+  confirmButtonColor: "#000000",
   background: "#ffffff",
 };
 

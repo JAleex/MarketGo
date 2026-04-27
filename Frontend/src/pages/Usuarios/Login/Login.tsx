@@ -23,7 +23,7 @@ const Login: React.FC = () => {
                 </div>
                 <div className="login-background">
                     <div className="login-image-header">
-                        <img src="/images/silueta_leopardo.webp" alt="Logo" className="logo-img"/>
+                        <img src="/images/silueta_leopardo.webp" alt="Logo" className="logo-img-login"/>
                     </div>
                 </div>
 
