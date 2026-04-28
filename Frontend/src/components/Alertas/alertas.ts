@@ -103,6 +103,7 @@ export const Alerts = {
       title?: string;
       confirmText?: string;
       cancelText?: string;
+      showCancelButton?: boolean;
     }
   ) {
     return Swal.fire({
@@ -110,7 +111,7 @@ export const Alerts = {
       icon: "question",
       title: options?.title ?? "¿Está seguro?",
       text,
-      showCancelButton: true,
+      showCancelButton: options?.showCancelButton,
       confirmButtonText: options?.confirmText ?? "Sí, continuar",
       cancelButtonText: options?.cancelText ?? "Cancelar",
     });

@@ -50,6 +50,7 @@ const register = async (formData: any) => {
             {
                 title: "Registro completado",
                 confirmText: "Ir al login",
+                showCancelButton: false
             }
         );
 

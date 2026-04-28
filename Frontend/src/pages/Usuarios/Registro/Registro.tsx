@@ -23,14 +23,14 @@ const Registro: React.FC = () => {
                 </div>
                 <div className="login-background">
                     <div className="login-image-header">
-                        <img src="/images/silueta_leopardo.webp" alt="Logo" className="logo-img"/>
+                        <img src="/images/silueta_leopardo.webp" alt="Logo" className="logo-img-login"/>
                     </div>
                 </div>
 
                 {/* Lado derecho - Formulario */}
                 <div className="login-card">    
-                    <h4 className="login-title">Registro</h4>
-                    <div className="recuadro-login">
+                    <h4 className="registro-title">Registro</h4>
+                    <div className="recuadro-registro">
                     <span className="textpass" style={{ cursor: "pointer" }} onClick={() => navigate("/login")}>
                         {'<- Volver'}
                     </span>
