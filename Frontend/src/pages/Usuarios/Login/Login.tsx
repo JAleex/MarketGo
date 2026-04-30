@@ -44,7 +44,7 @@ const Login: React.FC = () => {
                                         name="correo"
                                         value={formData.correo}
                                         onChange={handleChange}
-                                        placeholder="Correo@example.gov.co / Usuario"
+                                        placeholder="Correo@example.com / Usuario"
                                         autoComplete="off" 
                                         required
                                     />
