@@ -1,0 +1,424 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   MarketGo  ·  HomePage + ProductoDetallePage
+   Paleta: negro #111111  ·  amarillo #FFD600  ·  fondo #F4F4F4
+   Tipografía: Poppins (body) — ya disponible en el proyecto vía CSS global
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Tokens ──────────────────────────────────────────────────────────────── */
+:root {
+  --mgo-negro:       #111111;
+  --mgo-amarillo:    #FFD600;
+  --mgo-amarillo-dk: #E6C000;
+  --mgo-fondo:       #F4F4F4;
+  --mgo-blanco:      #FFFFFF;
+  --mgo-gris-borde:  #E0E0E0;
+  --mgo-gris-texto:  #666666;
+  --mgo-radio:       10px;
+  --mgo-sombra:      0 2px 10px rgba(0, 0, 0, 0.07);
+  --mgo-sombra-hover:0 8px 24px rgba(0, 0, 0, 0.12);
+  --mgo-trans:       0.2s ease;
+}
+
+/* ── Layout base ─────────────────────────────────────────────────────────── */
+.hp-layout {
+  padding: 22px 28px 40px;
+  min-height: 100vh;
+  background: var(--mgo-fondo);
+  font-family: "Poppins", sans-serif;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   BARRA DE FILTROS
+   ════════════════════════════════════════════════════════════════════════════ */
+.hp-filtros {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 14px;
+  background: var(--mgo-blanco);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: var(--mgo-sombra);
+  margin-bottom: 20px;
+}
+
+/* ── Búsqueda ────────────────────────────────────────────────────────────── */
+.hp-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 340px;
+}
+
+.hp-search-icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #BDBDBD;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.hp-clear-search {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #BDBDBD;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color var(--mgo-trans);
+}
+.hp-clear-search:hover { color: var(--mgo-negro); }
+
+/* ── Input base ──────────────────────────────────────────────────────────── */
+.hp-input {
+  width: 100%;
+  border: 1.5px solid var(--mgo-gris-borde);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  color: var(--mgo-negro);
+  background: var(--mgo-blanco);
+  outline: none;
+  transition: border-color var(--mgo-trans), box-shadow var(--mgo-trans);
+  -moz-appearance: textfield;
+}
+.hp-input::-webkit-outer-spin-button,
+.hp-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.hp-input:focus {
+  border-color: var(--mgo-amarillo);
+  box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.15);
+}
+
+.hp-search-input { padding-left: 34px; padding-right: 30px; }
+
+/* ── Rango precios ───────────────────────────────────────────────────────── */
+.hp-precio-grupo,
+.hp-categoria-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hp-precio-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--mgo-gris-texto);
+}
+
+.hp-precio-inputs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hp-input-precio {
+  width: 90px;
+}
+
+.hp-precio-sep {
+  color: #BDBDBD;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* ── Selector categoría ──────────────────────────────────────────────────── */
+.hp-select {
+  min-width: 180px;
+  cursor: pointer;
+  padding-right: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  appearance: none;
+}
+
+/* ── Botón limpiar ───────────────────────────────────────────────────────── */
+.hp-btn-limpiar {
+  background: none;
+  border: 1.5px solid var(--mgo-gris-borde);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  color: var(--mgo-gris-texto);
+  cursor: pointer;
+  align-self: flex-end;
+  transition: all var(--mgo-trans);
+  white-space: nowrap;
+}
+.hp-btn-limpiar:hover {
+  border-color: var(--mgo-negro);
+  color: var(--mgo-negro);
+  background: #f9f9f9;
+}
+.hp-btn-limpiar--center { margin-top: 12px; }
+
+/* ── Contador de resultados ──────────────────────────────────────────────── */
+.hp-resultados-count {
+  font-size: 12px;
+  color: var(--mgo-gris-texto);
+  margin: 0 0 14px;
+  font-weight: 500;
+}
+.hp-filtro-activo-tag {
+  color: var(--mgo-amarillo-dk);
+  font-weight: 600;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   GRID DE PRODUCTOS
+   ════════════════════════════════════════════════════════════════════════════ */
+.hp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+  gap: 18px;
+}
+
+/* ── Tarjeta ─────────────────────────────────────────────────────────────── */
+.hp-card {
+  background: var(--mgo-blanco);
+  border-radius: var(--mgo-radio);
+  overflow: hidden;
+  box-shadow: var(--mgo-sombra);
+  cursor: pointer;
+  outline: none;
+  border: 2px solid transparent;
+  transition: transform var(--mgo-trans), box-shadow var(--mgo-trans), border-color var(--mgo-trans);
+  /* entrada con fade + slide */
+  animation: hpCardIn 0.35s both ease-out;
+}
+
+@keyframes hpCardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hp-card:hover,
+.hp-card:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: var(--mgo-sombra-hover);
+  border-color: var(--mgo-amarillo);
+}
+
+/* ── Imagen de la tarjeta ────────────────────────────────────────────────── */
+.hp-card-img-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #EFEFEF;
+}
+
+.hp-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+  display: block;
+}
+.hp-card:hover .hp-card-img { transform: scale(1.06); }
+
+/* ── Cuerpo de la tarjeta ────────────────────────────────────────────────── */
+.hp-card-body {
+  padding: 10px 13px 13px;
+}
+
+.hp-card-nombre {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mgo-negro);
+  margin: 0 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hp-card-precio {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--mgo-negro);
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   EMPTY STATE
+   ════════════════════════════════════════════════════════════════════════════ */
+.hp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 20px;
+  text-align: center;
+}
+.hp-empty-icon {
+  font-size: 52px;
+  color: #CFCFCF;
+  display: block;
+  margin-bottom: 14px;
+}
+.hp-empty-titulo {
+  font-size: 16px;
+  color: #AAAAAA;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   BOTÓN VOLVER
+   ════════════════════════════════════════════════════════════════════════════ */
+.hp-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  color: var(--mgo-gris-texto);
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 22px;
+  transition: color var(--mgo-trans);
+}
+.hp-back-btn:hover { color: var(--mgo-negro); }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   PÁGINA DE DETALLE
+   ════════════════════════════════════════════════════════════════════════════ */
+.hp-detalle-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  animation: hpCardIn 0.3s both ease-out;
+}
+
+@media (max-width: 720px) {
+  .hp-detalle-wrap { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ── Columna imagen ──────────────────────────────────────────────────────── */
+.hp-detalle-img-col {}
+
+.hp-detalle-img-frame {
+  border-radius: 14px;
+  overflow: hidden;
+  background: #EFEFEF;
+  aspect-ratio: 4 / 3;
+  box-shadow: var(--mgo-sombra);
+}
+.hp-detalle-img-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Columna info ────────────────────────────────────────────────────────── */
+.hp-detalle-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hp-detalle-nombre {
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700;
+  color: var(--mgo-negro);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.hp-detalle-precio {
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 700;
+  color: var(--mgo-negro);
+  margin: 0;
+}
+
+.hp-detalle-fecha {
+  font-size: 12px;
+  color: var(--mgo-gris-texto);
+  margin: 0;
+}
+
+/* ── Secciones del detalle ───────────────────────────────────────────────── */
+.hp-detalle-seccion {}
+
+.hp-detalle-seccion-titulo {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--mgo-negro);
+  margin: 0 0 5px;
+}
+
+.hp-detalle-seccion-texto {
+  font-size: 14px;
+  color: #444;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Grilla de contacto ──────────────────────────────────────────────────── */
+.hp-contacto-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 14px;
+  align-items: baseline;
+}
+
+.hp-contacto-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  white-space: nowrap;
+}
+
+.hp-contacto-valor {
+  font-size: 13px;
+  color: var(--mgo-negro);
+}
+
+/* ── Botón carrito ───────────────────────────────────────────────────────── */
+.hp-btn-carrito {
+  align-self: flex-start;
+  background: var(--mgo-negro);
+  color: var(--mgo-amarillo);
+  border: none;
+  border-radius: 10px;
+  padding: 13px 32px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background var(--mgo-trans), transform 0.15s;
+  margin-top: 8px;
+}
+.hp-btn-carrito:hover {
+  background: #2a2a2a;
+  transform: translateY(-2px);
+}
+.hp-btn-carrito:active { transform: translateY(0); }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .hp-layout        { padding: 14px 16px 32px; }
+  .hp-filtros       { padding: 12px 14px; }
+  .hp-grid          { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .hp-search-wrap   { max-width: 100%; }
+}
