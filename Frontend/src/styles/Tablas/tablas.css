@@ -1,0 +1,153 @@
+/* 📌 Contenedor de la tabla con borde y sombra */
+.tabla-container {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  padding: 20px;
+  overflow: hidden; /* Evita desbordes */
+}
+
+/* 📌 Ajustes para evitar que la tabla sobresalga */
+.tabla-wrapper {
+  width: 100%;
+  overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
+}
+
+/* 📌 Estilos generales de la tabla */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+/* 📌 Estilos para las celdas */
+.custom-table th,
+.custom-table td {
+  padding: 12px 15px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000000;
+  vertical-align: middle; /* ✅ Centra contenido verticalmente */
+}
+
+/* 📌 Encabezado - SOLUCIÓN PARA LOGOS */
+.custom-table th {
+  background-color: #ffffff;
+  border-bottom: 2px solid #ddd;
+  height: auto; /* ✅ Altura automática */
+  min-height: 60px; /* ✅ Altura mínima para logos */
+  padding: 8px 4px; /* ✅ Padding reducido horizontal, mantiene vertical */
+  white-space: nowrap; /* ✅ Evita que el texto se corte */
+}
+
+/* 📌 Filas */
+.custom-table tr {
+  border-bottom: 1px solid #ddd;
+}
+
+/* 📌 Quitar separación entre columnas */
+.custom-table td {
+  border-right: none;
+}
+
+/* 📌 Hover en filas */
+.custom-table tr:hover {
+  background-color: #f1f5fc;
+}
+
+/* 📌 Contenedor de la paginación */
+.paginacion-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  background: #ffffff;
+  border-radius: 0 0 10px 10px;
+  margin-top: 30px;
+}
+
+/* 📌 Restaurar estilos de la paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 15px;
+}
+
+/* 📌 Botones de paginación */
+.pagination button {
+  padding: 8px 14px;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+/* 📌 Hover en los botones */
+.pagination button:hover {
+  background-color: #000000;
+}
+
+/* 📌 Botón deshabilitado */
+.pagination button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+/* 📌 Botón activo */
+.pagination button.active {
+  background-color: #000000;
+  font-weight: bold;
+}
+
+/* 📱 RESPONSIVE DESIGN - MOBILE */
+@media (max-width: 768px) {
+  .tabla-container {
+    padding: 15px; /* Reduce padding en móvil */
+  }
+  
+  .custom-table th,
+  .custom-table td {
+    padding: 8px 2px; /* ✅ Padding muy reducido en móvil */
+    font-size: 12px; /* Texto más pequeño */
+  }
+  
+  .custom-table th {
+    min-height: 50px; /* ✅ Altura mínima reducida para móvil */
+    padding: 6px 2px; /* ✅ Padding específico para encabezados en móvil */
+  }
+  
+  /* Si tienes logos, asegúrate de que tengan tamaño máximo */
+  .custom-table th img,
+  .custom-table td img {
+    max-width: 40px; /* ✅ Tamaño máximo de logos en móvil */
+    max-height: 40px;
+    width: auto;
+    height: auto;
+  }
+}
+
+/* 📱 EXTRA SMALL DEVICES */
+@media (max-width: 480px) {
+  .custom-table th,
+  .custom-table td {
+    padding: 6px 1px; /* ✅ Padding mínimo para pantallas muy pequeñas */
+    font-size: 11px;
+  }
+  
+  .custom-table th {
+    min-height: 45px;
+    padding: 4px 1px;
+  }
+  
+  .custom-table th img,
+  .custom-table td img {
+    max-width: 35px; /* ✅ Logos aún más pequeños */
+    max-height: 35px;
+  }
+}

@@ -95,14 +95,6 @@
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
 }
-
-.custom-button:focus-visible {
-  outline: 3px solid #1e3c72;
-  background: #172b4d;
-  color: white;
-  outline-offset: 3px;
-}
-
 /*====================== FUENTES DE TEXTOS ======================*/
 
 .textosH1Azul{

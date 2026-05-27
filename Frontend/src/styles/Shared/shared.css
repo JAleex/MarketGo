@@ -126,8 +126,8 @@
 }
 
 .btn-principal {
-  background: #000000;
-  color: white;
+  background: #000000 !important;
+  color: white !important;
 }
 .btn-principal:hover {
   background: #474747;
@@ -155,13 +155,6 @@
   background: #56595c;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
-}
-
-.custom-button:focus-visible {
-  outline: 3px solid #1e3c72;
-  background: #172b4d;
-  color: white;
-  outline-offset: 3px;
 }
 
 .input{

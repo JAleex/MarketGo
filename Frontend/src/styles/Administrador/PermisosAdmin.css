@@ -1,0 +1,758 @@
+/* ===========================================
+   COMPONENTE: PERMISOS ADMINISTRADOR
+   =========================================== */
+
+/* Cards de vista seleccionables */
+.vista-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.vista-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 48, 87, 0.15);
+}
+
+.vista-seleccionada {
+    border: 2px solid #003057;
+    background-color: #f0f7ff;
+}
+
+.vista-seleccionada .contenido-texto h3 {
+    color: #003057;
+}
+
+/* Botón de gestionar usuarios (tuerca) */
+.mod-gestionar-usuarios {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.mod-gestionar-usuarios:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+.mod-gestionar-usuarios .settings-icon {
+    color: white;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.mod-gestionar-usuarios:hover .settings-icon {
+    transform: rotate(15deg);
+}
+
+/* Estilos para el modal de gestión de usuarios */
+.rol-seccion-modal {
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 16px;
+    background-color: #f8f9fa;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+}
+
+.rol-header-modal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #dee2e6;
+    margin-bottom: 12px;
+}
+
+.rol-info-modal h6 {
+    color: #003057;
+    font-weight: 600;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Botón de toggle para permiso del rol */
+.permiso-rol-btn {
+    min-width: 150px;
+    border-radius: 25px;
+    font-weight: 600;
+    padding: 8px 20px;
+    border: 2px solid;
+    font-size: 14px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.permiso-rol-btn.permitido {
+    background-color: #172b4d;
+    color: white;
+    border-color: #172b4d;
+}
+
+.permiso-rol-btn.permitido:hover:not(:disabled) {
+    background-color: #1e3c72;
+    border-color: #1e3c72;
+    transform: scale(1.02);
+}
+
+.permiso-rol-btn.denegado {
+    background-color: #76d7c4;
+    color: #0e6251;
+    border-color: #76d7c4;
+}
+
+.permiso-rol-btn.denegado:hover:not(:disabled) {
+    background-color: #5cb8a6;
+    border-color: #5cb8a6;
+    transform: scale(1.02);
+}
+
+/* ESTILOS PARA PERMISOS PROTEGIDOS */
+.permiso-rol-btn.protegido,
+.permiso-check-btn.protegido {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+    background-color: #e9ecef !important;
+    color: #6c757d !important;
+    border-color: #ced4da !important;
+}
+
+.permiso-rol-btn.protegido:hover,
+.permiso-check-btn.protegido:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.usuario-item-modal.protegido {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.usuario-item-modal.protegido .usuario-nombre-modal {
+    color: #6c757d;
+}
+
+/* Icono de candado en permisos protegidos */
+.text-warning {
+    color: #003057 !important;
+    font-size: 14px;
+}
+
+/* Lista de usuarios en el modal */
+.usuarios-lista-modal {
+    padding: 12px 16px;
+    background-color: white;
+    border-radius: 8px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.usuario-item-modal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+}
+
+.usuario-item-modal:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transform: translateX(2px);
+}
+
+.usuario-item-modal.protegido:hover {
+    background-color: #f8f9fa;
+    box-shadow: none;
+    transform: none;
+}
+
+.usuario-info-modal {
+    flex: 1;
+}
+
+.usuario-nombre-modal {
+    font-weight: 600;
+    color: #212529;
+    font-size: 14px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.usuario-username-modal {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.usuario-permisos-modal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Badge para estado heredado */
+.estado-heredado {
+    background-color: #e8f0fe;
+    color: #1e3c72;
+    padding: 6px 12px;
+    font-weight: 500;
+    font-size: 11px;
+    border-radius: 12px;
+}
+
+/* Botones de permisos de usuario */
+.permisos-botones {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.permiso-check-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border: 2px solid;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 100px;
+    justify-content: center;
+}
+
+.permiso-check-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Botón Permitir */
+.permiso-check-btn.permitido-activo {
+    background-color: #172b4d;
+    border-color: #172b4d;
+    color: white;
+}
+
+.permiso-check-btn.permitido-inactivo {
+    background-color: white;
+    border-color: #172b4d;
+    color: #172b4d;
+}
+
+.permiso-check-btn.permitido-inactivo:hover:not(:disabled) {
+    background-color: #172b4d;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(23, 43, 77, 0.3);
+}
+
+/* Botón Denegar */
+.permiso-check-btn.denegado-activo {
+    background-color: #76d7c4;
+    border-color: #76d7c4;
+    color: #0e6251;
+}
+
+.permiso-check-btn.denegado-inactivo {
+    background-color: white;
+    border-color: #76d7c4;
+    color: #76d7c4;
+}
+
+.permiso-check-btn.denegado-inactivo:hover:not(:disabled) {
+    background-color: #76d7c4;
+    color: #0e6251;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(118, 215, 196, 0.3);
+}
+
+/* Iconos de checks */
+.permiso-check-btn .fa-check,
+.permiso-check-btn .fa-times {
+    font-size: 14px;
+}
+
+/* Scrollbar personalizado */
+.usuarios-lista-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.usuarios-lista-modal::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.usuarios-lista-modal::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.usuarios-lista-modal::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Code tags */
+code {
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #d63384;
+}
+
+/* Mensaje sin resultados */
+.no-resultados {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+    font-size: 16px;
+}
+
+.no-resultados p {
+    margin: 0;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rol-seccion-modal {
+    animation: fadeIn 0.3s ease;
+}
+
+.usuario-item-modal {
+    animation: fadeIn 0.2s ease;
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN
+   =========================================== */
+
+@media (max-width: 768px) {
+    .rol-header-modal {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .permiso-rol-btn {
+        width: 100%;
+    }
+
+    .usuario-item-modal {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .usuario-permisos-modal {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .permisos-botones {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .permiso-check-btn {
+        flex: 1;
+        min-width: 100px;
+        justify-content: center;
+    }
+}
+
+/* ===========================================
+   MEJORAS DE ACCESIBILIDAD
+   =========================================== */
+
+/* Focus states para accesibilidad */
+.mod-gestionar-usuarios:focus,
+.permiso-rol-btn:focus,
+.permiso-check-btn:focus {
+    outline: 2px solid #003057;
+    outline-offset: 2px;
+}
+
+/* Mejora de contraste para texto */
+.usuario-nombre-modal {
+    color: #212529;
+}
+
+/* Transiciones suaves para todas las interacciones */
+.vista-card,
+.mod-gestionar-usuarios,
+.permiso-rol-btn,
+.permiso-check-btn,
+.usuario-item-modal {
+    transition-property: transform, background-color, border-color, box-shadow;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+/* Prevenir destello en dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .mod-gestionar-usuarios:hover .settings-icon {
+        transform: none;
+    }
+    
+    .mod-gestionar-usuarios:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+/* Optimización para impresión */
+@media print {
+    .mod-gestionar-usuarios,
+    .permiso-rol-btn,
+    .permiso-check-btn,
+    .permisos-botones {
+        display: none;
+    }
+    
+    .usuario-item-modal {
+        break-inside: avoid;
+    }
+}
+
+/* Tooltip para permisos protegidos */
+.permiso-rol-btn[disabled],
+.permiso-check-btn[disabled] {
+    position: relative;
+}
+
+.permiso-rol-btn.protegido[disabled]:hover::after,
+.permiso-check-btn.protegido[disabled]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+
+.mod-grid-modulos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 15px 10px;
+  margin-top: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.mod-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border-top: 4px solid #F3D631; 
+}
+
+.mod-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mod-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #000000; 
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.3;
+  min-height: 1.6em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 2.6em; 
+  min-height: unset; 
+}
+
+.info-basica {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+  flex-grow: 0;
+}
+
+.info-basica p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #555;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.info-basica p strong {
+  color: #000000;
+  font-weight: 600;
+}
+
+.descripcion-corta {
+  font-size: 0.85rem !important;
+  color: #6c757d !important; 
+  line-height: 1.4;
+  margin: 8px 0 12px 0 !important;
+  padding: 4px 0;
+  border-top: 1px dashed #eee;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.8em; 
+  flex-grow: 0;
+}
+
+.contenido-texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.mod-acciones {
+  margin-top: auto; 
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 100%;
+}
+
+.mod-acciones .btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  transition: all 0.2s ease;
+  flex-shrink: 0; 
+}
+
+.mod-ver-detalle {
+  background-color: #e8f0fe; 
+  color: #000000; 
+}
+
+.mod-ver-detalle:hover {
+  background-color: #000000; 
+  color: white;
+}
+
+.mod-editar {
+  background-color: #f0f4f8; 
+  color: #000000; 
+}
+
+.mod-editar:hover {
+  background-color: #000000;
+  color: white;
+}
+
+.mod-toggle-estado {
+  background-color: #e8f6f3; 
+  color: #000000; 
+}
+
+.mod-toggle-estado.activo:hover {
+  background-color: #76D7C4; 
+  color: #0e6251;
+}
+
+.mod-toggle-estado.inactivo:hover {
+  background-color: #f5b7b1; 
+  color: #7b241c;
+}
+
+.mod-acciones .icon {
+  font-size: 16px;
+}
+
+.mod-acciones .edit-icon {
+  color: #000000;
+}
+
+.mod-acciones .view-icon {
+  color: #000000; 
+}
+
+.mod-acciones .toggle-on {
+  color: #172b4d; 
+}
+
+.mod-acciones .toggle-off {
+  color: #e74c3c; 
+}
+
+.mod-ver-detalle:hover .edit-icon {
+  color: white;
+}
+
+.mod-editar:hover .view-icon {
+  color: white;
+}
+
+.mod-toggle-estado.activo:hover .toggle-on {
+  color: #0e6251; 
+}
+
+.mod-toggle-estado.inactivo:hover .toggle-off {
+  color: #7b241c; 
+}
+
+.no-resultados {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d; 
+  font-size: 1.1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.mod-grid-modulos::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mod-grid-modulos::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.mod-grid-modulos::-webkit-scrollbar-thumb {
+  background: #F3D631; 
+  border-radius: 4px;
+}
+
+.mod-grid-modulos::-webkit-scrollbar-thumb:hover {
+  background: #F3D631; 
+}
+
+/* ===============================
+   RESPONSIVE DESIGN
+   =============================== */
+
+@media (max-width: 1200px) {
+  .mod-grid-modulos {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .row.align-items-stretch {
+    flex-direction: column;
+  }
+  
+  .col-9, .col-md-3 {
+    width: 100%;
+  }
+  
+  .mod-grid-modulos {
+    grid-template-columns: 1fr;
+    max-height: none;
+    overflow-y: visible;
+    padding: 10px 5px;
+  }
+  
+  .mod-card {
+    min-height: 170px;
+  }
+  
+  .mod-acciones {
+    padding-top: 10px;
+  }
+  
+  .descripcion-corta {
+    -webkit-line-clamp: 2;
+    min-height: 2.8em;
+  }
+}
+
+@media (max-width: 576px) {
+  .mod-grid-modulos {
+    gap: 15px;
+  }
+  
+  .mod-card {
+    padding: 15px;
+  }
+  
+  .mod-card h3 {
+    font-size: 1.2rem;
+  }
+  
+  .mod-acciones .btn {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .mod-acciones .icon {
+    font-size: 14px;
+  }
+  
+  .descripcion-corta {
+    font-size: 0.8rem !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mod-card {
+    min-height: 190px; 
+  }
+}
+
+.mod-card.activo {
+border-top-color: #F3D631; 
+}
+
+.mod-card.inactivo {
+  border-top-color: #e74c3c; 
+}

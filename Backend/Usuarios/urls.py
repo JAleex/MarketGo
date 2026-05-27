@@ -22,5 +22,16 @@ urlpatterns = [
     path('permisos-rol/actualizar/', PermisoRolUpdateView.as_view(), name='permisos-rol-update'),
     path('permisos-rol/bulk/', PermisoRolBulkUpdateView.as_view(), name='permisos-rol-bulk'),
     path('roles-permisos/', RolesConPermisosView.as_view(), name='roles-permisos'),
-    path('crear-usuario/', RegistroNuevoUsuario.as_view(), name='crear-usuario')
+    path('crear-usuario/', RegistroNuevoUsuario.as_view(), name='crear-usuario'),
+
+
+     # ==================== CRUD DE EVALUADORES ====================
+
+    path('usuarios/', UsuariosListView.as_view(), name='usuarios-listar'),
+    path('usuarios/crear/', UsuariosCreateView.as_view(), name='usuarios-crear'),
+    path('usuarios/<int:pk>/', UsuariosDetailView.as_view(), name='usuarios-detalle'),
+    path('usuarios/<int:pk>/actualizar/', UsuariosUpdateView.as_view(), name='usuarios-actualizar'),
+    path('usuarios/<int:pk>/desactivar/', UsuariosDesactivateView.as_view(), name='usuarios-desactivar'),
+    path('usuarios/<int:pk>/activar/', UsuariosActivateView.as_view(), name='usuarios-activar'),
+
 ]

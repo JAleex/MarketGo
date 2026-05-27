@@ -497,3 +497,134 @@ class RegistroNuevoUsuario(APIView):
 
         except Exception as e:
             return api_response(f"Error al registrar usuario: {str(e)}", "error", status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# ==================== CRUD DE EVALUADORES ====================
+
+class UsuariosListView(APIView):
+    """Vista para listar todos los evaluadores"""
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        evaluadores = Usuarios.objects.select_related(
+            'fk_rol',
+            'fk_estado'
+        ).filter(fk_rol_id=2) 
+        
+        serializer = UsuariosListSerializer(evaluadores, many=True)
+
+        return api_response(
+            "Usuarios obtenidos exitosamente",
+            data=serializer.data,
+            http_status=status.HTTP_200_OK
+        )
+
+
+class UsuariosCreateView(APIView):
+    """Vista para crear un nuevo evaluador"""
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = UsuariosCreateSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return api_response(
+                "Error en la validación de datos",
+                status_type="error",
+                http_status=status.HTTP_400_BAD_REQUEST,
+                data=serializer.errors
+            )
+
+        evaluador = serializer.save()
+        response_data = UsuariosListSerializer(evaluador).data
+
+        return api_response(
+            "Usuarios creado exitosamente",
+            data=response_data,
+            http_status=status.HTTP_201_CREATED
+        )
+
+
+class UsuariosUpdateView(APIView):
+    """Vista para actualizar un evaluador existente"""
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, pk):
+        evaluador = get_object_or_404(Usuarios, pk_usuario=pk)
+
+        serializer = UsuariosUpdateSerializer(
+            evaluador,
+            data=request.data,
+            partial=True
+        )
+
+        if not serializer.is_valid():
+            return api_response(
+                "Error en la validación de datos",
+                status_type="error",
+                http_status=status.HTTP_400_BAD_REQUEST,
+                data=serializer.errors
+            )
+
+        evaluador_actualizado = serializer.save()
+        response_data = UsuariosListSerializer(evaluador_actualizado).data
+
+        return api_response(
+            "Usuarios actualizado exitosamente",
+            data=response_data,
+            http_status=status.HTTP_200_OK
+        )
+
+
+class UsuariosDesactivateView(APIView):
+    """Vista para desactivar un evaluador"""
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, pk):
+        evaluador = get_object_or_404(Usuarios, pk_usuario=pk)
+        estado_inactivo = get_object_or_404(Estado, pk_estado=2)
+
+        evaluador.fk_estado = estado_inactivo
+        evaluador.save()
+
+        response_data = UsuariosListSerializer(evaluador).data
+
+        return api_response(
+            "Usuarios desactivado exitosamente",
+            data=response_data,
+            http_status=status.HTTP_200_OK
+        )
+
+
+class UsuariosActivateView(APIView):
+    """Vista para activar un evaluador"""
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, pk):
+        evaluador = get_object_or_404(Usuarios, pk_usuario=pk)
+        estado_activo = get_object_or_404(Estado, pk_estado=1)
+
+        evaluador.fk_estado = estado_activo
+        evaluador.save()
+
+        response_data = UsuariosListSerializer(evaluador).data
+
+        return api_response(
+            "Usuarios activado exitosamente",
+            data=response_data,
+            http_status=status.HTTP_200_OK
+        )
+
+
+class UsuariosDetailView(APIView):
+    """Vista para obtener el detalle de un evaluador específico"""
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        evaluador = get_object_or_404(Usuarios, pk_usuario=pk)
+        serializer = UsuariosListSerializer(evaluador)
+
+        return api_response(
+            "Usuarios obtenido exitosamente",
+            data=serializer.data,
+            http_status=status.HTTP_200_OK
+        )
