@@ -68,3 +68,41 @@ class ProductoDetallePublicoSerializer(serializers.ModelSerializer):
  
     def get_correo_vendedor(self, obj):
         return obj.fk_usuario.correo if obj.muestra_correo else None
+    
+
+class MiProductoCreateSerializer(serializers.ModelSerializer):
+   
+    imagen = serializers.ImageField(write_only=True, required=False, allow_null=True)
+ 
+    class Meta:
+        model = Productos
+        fields = [
+            "codigo_producto",
+            "nombre",
+            "precio",
+            "detalles",
+            "fk_estado",
+            "stock",
+            "muestra_nombre",
+            "muestra_telefono",
+            "muestra_correo",
+            "imagen",
+        ]
+ 
+    def validate_codigo_producto(self, value):
+        qs = Productos.objects.filter(codigo_producto=value)
+        if self.instance:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise serializers.ValidationError("Ya existe un producto con ese código.")
+        return value
+ 
+    def validate_precio(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("El precio debe ser mayor a cero.")
+        return value
+ 
+    def validate_stock(self, value):
+        if value < 0:
+            raise serializers.ValidationError("El stock no puede ser negativo.")
+        return value

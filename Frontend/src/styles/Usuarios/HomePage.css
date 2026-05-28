@@ -450,6 +450,225 @@
 }
 .hp-btn-carrito:active { transform: translateY(0); }
 
+
+.btn-amarillo {
+  background-color: #FFD600 !important;
+  color: #111111 !important;
+  border: none !important;
+  font-weight: 700 !important;
+  padding: 8px 32px !important;
+  border-radius: 6px !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 14px !important;
+  transition: background 0.18s, transform 0.12s !important;
+}
+.btn-amarillo:hover:not(:disabled) {
+  background-color: #E6C200 !important;
+  transform: translateY(-1px) !important;
+}
+.btn-amarillo:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
+}
+
+/* ── Contenedor del form ────────────────────────────────────────── */
+.mp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 4px 2px;
+}
+
+/* ── Filas ──────────────────────────────────────────────────────── */
+.mp-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.mp-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .mp-row-3, .mp-row-2 { grid-template-columns: 1fr; }
+}
+
+/* ── Field wrapper ──────────────────────────────────────────────── */
+.mp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── Label ──────────────────────────────────────────────────────── */
+.mp-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ── Input base ─────────────────────────────────────────────────── */
+.mp-input {
+  border: 1.5px solid #D8D8D8;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  color: #111;
+  background: #fff;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.18s, box-shadow 0.18s;
+  -moz-appearance: textfield;
+}
+.mp-input::-webkit-outer-spin-button,
+.mp-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.mp-input:focus {
+  border-color: #FFD600;
+  box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.18);
+}
+.mp-input--error {
+  border-color: #e74c3c !important;
+}
+
+/* ── Textarea ───────────────────────────────────────────────────── */
+.mp-textarea {
+  resize: vertical;
+  min-height: 76px;
+}
+
+/* ── Select ─────────────────────────────────────────────────────── */
+.mp-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+/* ── Precio con símbolo ─────────────────────────────────────────── */
+.mp-precio-wrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #D8D8D8;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+.mp-precio-wrap:focus-within {
+  border-color: #FFD600;
+  box-shadow: 0 0 0 3px rgba(255, 214, 0, 0.18);
+}
+.mp-precio-signo {
+  padding: 7px 10px;
+  background: #F5F5F5;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  border-right: 1.5px solid #D8D8D8;
+  flex-shrink: 0;
+}
+.mp-input-precio {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  flex: 1;
+}
+.mp-input-precio:focus { box-shadow: none !important; }
+
+/* ── Zona de imagen ─────────────────────────────────────────────── */
+.mp-imagen-upload {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.5px solid #D8D8D8;
+  border-radius: 6px;
+  padding: 7px 10px;
+  cursor: pointer;
+  background: #fff;
+  min-height: 38px;
+  transition: border-color 0.18s;
+  overflow: hidden;
+}
+.mp-imagen-upload:hover { border-color: #FFD600; }
+
+.mp-imagen-placeholder {
+  font-size: 12px;
+  color: #AAAAAA;
+  font-family: "Poppins", sans-serif;
+  flex: 1;
+}
+.mp-imagen-icon {
+  font-size: 18px;
+  color: #AAAAAA;
+  flex-shrink: 0;
+}
+.mp-imagen-preview {
+  width: 100%;
+  max-height: 120px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.mp-imagen-quitar {
+  background: none;
+  border: none;
+  font-size: 11px;
+  color: #e74c3c;
+  cursor: pointer;
+  padding: 2px 0 0;
+  font-family: "Poppins", sans-serif;
+}
+.mp-imagen-quitar:hover { text-decoration: underline; }
+
+/* ── Sección contacto ───────────────────────────────────────────── */
+.mp-contacto {
+  border-top: 1px solid #EFEFEF;
+  padding-top: 12px;
+}
+.mp-contacto-titulo {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 10px;
+  font-family: "Poppins", sans-serif;
+}
+.mp-checks {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.mp-check-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  user-select: none;
+}
+.mp-check-label input[type="checkbox"] {
+  accent-color: #FFD600;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* ── Mensaje de error bajo el input ────────────────────────────── */
+.mp-error {
+  font-size: 11px;
+  color: #e74c3c;
+  font-family: "Poppins", sans-serif;
+  margin-top: 2px;
+}
+
+
+
 /* ════════════════════════════════════════════════════════════════════════════
    RESPONSIVE
    ════════════════════════════════════════════════════════════════════════════ */

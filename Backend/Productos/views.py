@@ -1,3 +1,8 @@
+import os
+import uuid
+ 
+from django.conf import settings
+from django.shortcuts import get_object_or_404
 from Usuarios.models import Estado
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -5,7 +10,6 @@ from rest_framework import status
 from .models import Productos
 from .serializer import *
 from Utils.responses import api_response
-from django.shortcuts import get_object_or_404
 
 
 class ProductosListView(APIView):
@@ -90,4 +94,58 @@ class ToggleEstadoProductoView(APIView):
                 "estado": producto.fk_estado.nombre
             },
             http_status=status.HTTP_200_OK
+        )
+    
+ 
+def _guardar_imagen(imagen_file) -> str:
+
+    carpeta = os.path.join(settings.MEDIA_ROOT, "productos")
+    os.makedirs(carpeta, exist_ok=True)
+ 
+    ext            = os.path.splitext(imagen_file.name)[1].lower()
+    nombre_archivo = f"productos/{uuid.uuid4().hex}{ext}"
+    ruta_completa  = os.path.join(settings.MEDIA_ROOT, nombre_archivo)
+ 
+    with open(ruta_completa, "wb+") as dest:
+        for chunk in imagen_file.chunks():
+            dest.write(chunk)
+ 
+    return nombre_archivo
+ 
+ 
+def _eliminar_imagen(ruta_imagen: str) -> None:
+    if not ruta_imagen:
+        return
+    ruta_completa = os.path.join(settings.MEDIA_ROOT, ruta_imagen)
+    if os.path.exists(ruta_completa):
+        os.remove(ruta_completa)
+ 
+ 
+class MisProductosListCreateView(APIView):
+    permission_classes = [IsAuthenticated]
+ 
+    def post(self, request):
+ 
+        serializer = MiProductoCreateSerializer(data=request.data)
+ 
+        if not serializer.is_valid():
+            return api_response(
+                "Datos inválidos",
+                data=serializer.errors,
+                http_status=status.HTTP_400_BAD_REQUEST
+            )
+ 
+        imagen_file = serializer.validated_data.pop("imagen", None)
+        ruta_imagen = _guardar_imagen(imagen_file) if imagen_file else None
+ 
+        producto = Productos.objects.create(
+            **serializer.validated_data,
+            fk_usuario=request.user,
+            ruta_imagen=ruta_imagen,
+        )
+ 
+        return api_response(
+            "Producto creado exitosamente",
+            data=ProductosListSerializer(producto, context={"request": request}).data,
+            http_status=status.HTTP_201_CREATED
         )

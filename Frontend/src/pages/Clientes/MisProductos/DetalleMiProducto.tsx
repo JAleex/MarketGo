@@ -4,6 +4,8 @@ import PantallaCarga from "../../../components/PantallaCarga/PantallaCarga";
 import { LogicaMisProductos } from "../MisProductos/LogicaMisProductos";
 import type { ProductoDetalle } from "../MisProductos/LogicaMisProductos";
 import "../../../styles/Usuarios/HomePage.css";
+import { LogicaDetalleMiProducto } from "./LogicaDetalleMiProducto";
+import Modal from "../../../components/Modales/Modal";
 
 const IMG_PLACEHOLDER =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='450'" +
@@ -18,6 +20,22 @@ const DetalleMiProducto: React.FC = () => {
   const [cargando, setCargando] = useState(true);
 
   const { cargarDetalleProducto, formatPrecio, formatFecha } = LogicaMisProductos();
+  const { 
+        estados,
+        isModalOpen,
+        setIsModalOpen,
+        errores,
+        setErrores,
+        obtenerEstados,
+        ProductoEditando,
+        setProductoEditando,
+        Cargando,
+        validarCampos,
+        ProductosData,
+        setProductosData,
+        handleInputChangeProductos,
+        estadosFiltrados,
+      } = LogicaDetalleMiProducto();
 
   useEffect(() => {
     if (!pk) return;
@@ -124,8 +142,7 @@ const DetalleMiProducto: React.FC = () => {
               <button
                 className="btn btn-principal"
                 onClick={() => {
-                  /* se conectará al hook de carrito en la siguiente fase */
-                  alert(`Agregar al carrito: producto #${producto.pk_producto}`);
+                  setIsModalOpen(true);
                 }}
               >
                 Editar Producto
@@ -134,6 +151,22 @@ const DetalleMiProducto: React.FC = () => {
           </div>
         )}
       </div>
+       {/* Modal para crear/editar evaluador */}
+          <Modal
+              isOpen={isModalOpen}
+              onClose={() => {
+                  setIsModalOpen(false);
+                  setErrores({});
+              }}
+              title={"Editar Producto" }
+              onSave={validarCampos}
+              txtBoton={"Guardar Cambios"}
+              botonClassName="btn-principal custom-button"
+          >
+              <div className="container">
+                  
+              </div>
+          </Modal>
     </>
   );
 };
