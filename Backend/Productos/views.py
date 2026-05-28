@@ -149,3 +149,47 @@ class MisProductosListCreateView(APIView):
             data=ProductosListSerializer(producto, context={"request": request}).data,
             http_status=status.HTTP_201_CREATED
         )
+    
+class MiProductoUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+ 
+    def patch(self, request, pk):
+        
+        producto = get_object_or_404(
+            Productos,
+            pk_producto=pk,
+            fk_usuario=request.user
+        )
+
+        print("PRODUCTO",producto)
+ 
+        serializer = MiProductoCreateSerializer(
+            producto,
+            data=request.data,
+            partial=True
+        )
+        
+        print("SERIALIZER",serializer)
+
+
+        if not serializer.is_valid():
+            return api_response(
+                "Datos inválidos",
+                data=serializer.errors,
+                http_status=status.HTTP_400_BAD_REQUEST
+            )
+ 
+        imagen_file = serializer.validated_data.pop("imagen", None)
+        if imagen_file:
+            _eliminar_imagen(producto.ruta_imagen)
+            producto.ruta_imagen = _guardar_imagen(imagen_file)
+ 
+        for attr, value in serializer.validated_data.items():
+            setattr(producto, attr, value)
+        producto.save()
+ 
+        return api_response(
+            "Producto actualizado exitosamente",
+            data=ProductosListSerializer(producto, context={"request": request}).data,
+            http_status=status.HTTP_200_OK
+        )

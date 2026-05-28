@@ -12,7 +12,7 @@ path("productos/<int:pk>/", ProductoDetallePublicoView.as_view(), name="producto
 path('mis-productos/',MisProductosListView.as_view(),name='mis-productos-listar'),
 path('cambiar-estado-producto/<int:pk>/',ToggleEstadoProductoView.as_view(),name='mis-productos-cambiar-estado'),
 path("crear-mis-productos/",MisProductosListCreateView.as_view(),name="mis-productos",),
-
+path('mis-productos/<int:pk>/editar/', MiProductoUpdateView.as_view(),name='mis-productos-editar'),
 
 
 ]
