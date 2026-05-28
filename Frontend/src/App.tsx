@@ -7,13 +7,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RutasProtegidas from "./components/Permisos/RutasProtegidas";
 import PermisosAdmin from "./pages/Administrador/Permisos/PermisosAdmin";
 import HomePage from "./pages/Clientes/HomePage/HomePage";
+import MisProductos from "./pages/Clientes/MisProductos/MisProductos";
 import LayoutPrincipal from "./components/LayoutPrincipal/LayoutPrincipal";
+import ProductoDetallePage from "./pages/Clientes/DetalleProductoCliente/DetalleProductoCliente";
+import MiProductoDetallePage from "./pages/Clientes/MisProductos/DetalleMiProducto";
 
 const rutas: Record<string, React.ComponentType> = {
   "/accesos": PermisosAdmin,
   "/usuarios": Usuarios,
   "/inicio": HomePage,
-
+  "/misproductos": MisProductos
 };
 
 const App: React.FC = () => {
@@ -32,12 +35,11 @@ const App: React.FC = () => {
             }
           >
             {Object.entries(rutas).map(([path, Component]) => (
-              <Route
-                key={path}
-                path={path}
-                element={<Component />}
-              />
+              <Route key={path} path={path} element={<Component />}/>
             ))}
+            <Route path="/producto/:pk" element={<ProductoDetallePage />}/>
+            <Route path="/detalle-mi-producto/:pk" element={<MiProductoDetallePage />}/>
+
           </Route>
 
           <Route path="/" element={<Navigate to="/login" replace />} />

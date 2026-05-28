@@ -56,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({ isNavbarVisible, toggleNavbar }) => {
     if (loading || vistas.length === 0) return null;
     
     return vistas
-      .filter(v => v.tiene_acceso) //SOLO PERMISOS ACTIVOS
+      .filter(v => v.tiene_acceso && v.visible_en_navbar) 
       .map(v => {
         const rutaBase = v.ruta_vista;
         const isActive = location.pathname.startsWith(rutaBase);

@@ -1,9 +1,10 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import PantallaCarga from "../../../components/PantallaCarga/PantallaCarga";
-import { useHomePage } from "./LogicaHomePage";
-import type { ProductoCard } from "./LogicaHomePage";
+import { LogicaMisProductos } from "./LogicaMisProductos";
+import type { ProductoCard } from "./LogicaMisProductos";
 import "../../../styles/Usuarios/HomePage.css";
+import Modal from "../../../components/Modales/Modal";
 
 // ─── Placeholder SVG cuando no hay imagen ────────────────────────────────────
 const IMG_PLACEHOLDER =
@@ -17,16 +18,26 @@ const ProductoCard: React.FC<{
   producto: ProductoCard;
   formatPrecio: (p: number) => string;
   onClick: (pk: number) => void;
+  onToggleEstado: (producto: ProductoCard) => void;
   index: number;
-}> = ({ producto, formatPrecio, onClick, index }) => (
+}> = ({
+  producto,
+  formatPrecio,
+  onClick,
+  onToggleEstado,
+  index
+}) => (
   <article
     className="hp-card"
     style={{ animationDelay: `${index * 40}ms` }}
     onClick={() => onClick(producto.pk_producto)}
     role="button"
     tabIndex={0}
-    onKeyDown={(e) => e.key === "Enter" && onClick(producto.pk_producto)}
+    onKeyDown={(e) =>
+      e.key === "Enter" && onClick(producto.pk_producto)
+    }
   >
+
     <div className="hp-card-img-wrap">
       <img
         src={producto.imagen_url ?? IMG_PLACEHOLDER}
@@ -38,18 +49,50 @@ const ProductoCard: React.FC<{
         }}
       />
     </div>
+
     <div className="hp-card-body">
-      <p className="hp-card-nombre">{producto.nombre}</p>
-      <p className="hp-card-precio">{formatPrecio(producto.precio)}</p>
+
+      <p className="hp-card-nombre">
+        {producto.nombre}
+      </p>
+
+      <p className="hp-card-precio">
+        {formatPrecio(producto.precio)}
+      </p>
+
+      <div className="hp-card-footer">
+
+        <span className={`estado-texto ${producto.fk_estado === 1
+          ? "activo"
+          : "inactivo"
+        }`}>
+          {producto.estado}
+        </span>
+        <button
+          type="button"
+          className="toggle-estado-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleEstado(producto);
+          }}
+        >
+          <i
+            className={`bi ${
+              producto.fk_estado === 1
+                ? "bi-toggle-on"
+                : "bi-toggle-off"
+            }`}
+          ></i>
+        </button>
+      </div>
     </div>
+
   </article>
 );
 
 // ─── Componente principal ─────────────────────────────────────────────────────
-const HomePage: React.FC = () => {
+const MisProductos: React.FC = () => {
   const navigate = useNavigate();
-  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
-  const toggleNavbar = useCallback(() => setIsNavbarVisible((p) => !p), []);
 
   const {
     productos,
@@ -63,17 +106,16 @@ const HomePage: React.FC = () => {
     hayFiltrosActivos,
     limpiarFiltros,
     formatPrecio,
-    
-  } = useHomePage();
+    handleToggleEstado
+  } = LogicaMisProductos();
 
-  const irADetalle = (pk: number) => navigate(`/producto/${pk}`);
+  const irADetalle = (pk: number) => navigate(`/detalle-mi-producto/${pk}`);
 
   
   return (
     <>
       <PantallaCarga isLoading={cargando} />
       <div>
-
         {/* ═══ Barra de filtros ════════════════════════════════════════════ */}
         <div className="hp-filtros">
 
@@ -125,6 +167,12 @@ const HomePage: React.FC = () => {
               Limpiar
             </button>
           )}
+           <div className="col-md-auto ms-auto">
+            <button className="btn btn-principal">
+                <i className="bi bi-plus me-1" />
+                Agregar Productos
+            </button>
+          </div>
         </div>
 
         {/* ═══ Contador de resultados ══════════════════════════════════════ */}
@@ -156,14 +204,16 @@ const HomePage: React.FC = () => {
                 producto={p}
                 formatPrecio={formatPrecio}
                 onClick={irADetalle}
+                onToggleEstado={handleToggleEstado}
                 index={i}
               />
             ))}
           </section>
         )}
       </div>
+
     </>
   );
 };
 
-export default HomePage;
+export default MisProductos;

@@ -8,6 +8,7 @@ export interface ProductoCard {
   pk_producto: number;
   nombre: string;
   precio: number;
+  fk_estado: number;
   fecha_publicacion: string;
   estado: string;
   codigo_producto: string;
@@ -16,6 +17,7 @@ export interface ProductoCard {
 
 export interface ProductoDetalle extends ProductoCard {
   detalles: string | null;
+  stock: string | null;
   nombre_vendedor: string | null;
   telefono_vendedor: string | null;
   correo_vendedor: string | null;
@@ -26,15 +28,17 @@ export interface ProductoDetalle extends ProductoCard {
 const API_URL = import.meta.env.VITE_API_URL;
 
 const ENDPOINTS = {
-  productos: `${API_URL}/productos/productos/`,
+  productos: `${API_URL}/productos/mis-productos/`,
   productoById: (pk: number) => `${API_URL}/productos/productos/${pk}/`,
+  estadoProducto: (pk: number) =>`${API_URL}/productos/cambiar-estado-producto/${pk}/`,
 } as const;
 
 const authCfg = () => ({ withCredentials: true });
 
+
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
-export const useHomePage = () => {
+export const LogicaMisProductos = () => {
 
   // Productos originales
   const [productosOriginales, setProductosOriginales] = useState<ProductoCard[]>([]);
@@ -188,6 +192,32 @@ export const useHomePage = () => {
     maxPrecio
   );
 
+const handleToggleEstado = async (producto: ProductoCard) => {
+  const nuevoEstado = producto.fk_estado === 1 ? 2 : 1;
+
+  try {
+    await api.patch(
+      ENDPOINTS.estadoProducto(producto.pk_producto),
+      {},
+      authCfg()
+    );
+
+    setProductos((prev) =>
+      prev.map((p) =>
+        p.pk_producto === producto.pk_producto
+          ? {
+              ...p,
+              fk_estado: nuevoEstado,
+              estado: nuevoEstado === 1 ? "Activo" : "Inactivo",
+            }
+          : p
+      )
+    );
+  } catch (error) {
+    console.error("Error cambiando estado", error);
+  }
+};
+
   return {
     productos,
     cargando,
@@ -202,5 +232,6 @@ export const useHomePage = () => {
     cargarDetalleProducto,
     formatPrecio,
     formatFecha,
+    handleToggleEstado
   };
 };

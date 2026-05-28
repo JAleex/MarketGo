@@ -211,6 +211,43 @@
   border-color: var(--mgo-amarillo);
 }
 
+.hp-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.toggle-estado-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.toggle-estado-btn i {
+  font-size: 2rem;
+  transition: 0.2s ease;
+}
+
+.toggle-estado-btn .bi-toggle-on {
+  color: #198754;
+}
+
+.toggle-estado-btn .bi-toggle-off {
+  color: #6c757d;
+}
+
+.estado-texto.activo {
+  color: #198754;
+  font-weight: 600;
+}
+
+.estado-texto.inactivo {
+  color: #dc3545;
+  font-weight: 600;
+}
+
 /* ── Imagen de la tarjeta ────────────────────────────────────────────────── */
 .hp-card-img-wrap {
   width: 100%;

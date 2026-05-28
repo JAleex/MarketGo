@@ -10,6 +10,8 @@ type Vista = {
   ruta_vista: string;
   tiene_acceso: boolean;
   icono: string;
+  visible_en_navbar: boolean;
+
 };
 
 type RolPermisos = {

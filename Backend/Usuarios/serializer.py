@@ -111,6 +111,7 @@ class PermisoRolSerializer(serializers.ModelSerializer):
     nombre_rol = serializers.CharField(source='fk_rol.nombre_rol', read_only=True)
     nombre_vista = serializers.CharField(source='fk_vista.nombre', read_only=True)
     ruta_vista = serializers.CharField(source='fk_vista.ruta', read_only=True)
+    visible_en_navbar = serializers.CharField(source='fk_vista.visible_en_navbar', read_only=True)
     icono = serializers.CharField(source='fk_vista.icono', read_only=True)
 
     class Meta:
@@ -123,7 +124,8 @@ class PermisoRolSerializer(serializers.ModelSerializer):
             'nombre_vista',
             'ruta_vista',
             'tiene_acceso',
-            'icono'
+            'icono',
+            'visible_en_navbar'
         ]
 
 
@@ -145,6 +147,8 @@ class RolConPermisosSerializer(serializers.ModelSerializer):
                 "ruta_vista": p.fk_vista.ruta,
                 "icono": p.fk_vista.icono,
                 "tiene_acceso": p.tiene_acceso,
+                'visible_en_navbar': p.fk_vista.visible_en_navbar,
+                
             }
             for p in permisos
         ]
