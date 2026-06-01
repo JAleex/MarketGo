@@ -28,6 +28,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const ENDPOINTS = {
   productos: `${API_URL}/productos/productos/`,
   productoById: (pk: number) => `${API_URL}/productos/productos/${pk}/`,
+  carrito: `${API_URL}/ventas/carrito/`,
 } as const;
 
 const authCfg = () => ({ withCredentials: true });
@@ -50,7 +51,7 @@ export const useHomePage = () => {
   const [minPrecio, setMinPrecio] = useState("");
   const [maxPrecio, setMaxPrecio] = useState("");
 
-  // ── Cargar productos SOLO UNA VEZ ──────────────────────
+  // ── Cargar productos ──────────────────────
 
   const cargarProductos = async () => {
 
@@ -85,6 +86,23 @@ export const useHomePage = () => {
   useEffect(() => {
     void cargarProductos();
   }, []);
+  // ──   Agregar Productos al Carrito ──────────────────────
+  const agregarCarrito = async (pk: number)=> {
+     try {
+        await api.post(
+          ENDPOINTS.carrito,
+          { fk_producto: pk, cantidad_producto: 1 },
+          authCfg()
+        );
+        Alerts.success("Producto agregado al carrito");
+      } catch (error: any) {
+        if (error?.response?.status === 404) {
+          Alerts.error("Producto no encontrado");
+        } else if (error?.response?.status !== 401) {
+          Alerts.error("Error al agregar al carrito");
+        }
+      }
+  }
 
   // ── Filtrar productos en FRONTEND ──────────────────────
 
@@ -141,9 +159,7 @@ export const useHomePage = () => {
 
   // ── Detalle producto ───────────────────────────────────
 
-  const cargarDetalleProducto = async (
-    pk: number
-  ): Promise<ProductoDetalle | null> => {
+  const cargarDetalleProducto = async (pk: number): Promise<ProductoDetalle | null> => {
 
     try {
 
@@ -200,6 +216,7 @@ export const useHomePage = () => {
     hayFiltrosActivos,
     limpiarFiltros,
     cargarDetalleProducto,
+    agregarCarrito,
     formatPrecio,
     formatFecha,
   };

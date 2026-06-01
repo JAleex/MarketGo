@@ -37,7 +37,7 @@ class ProductosListSerializer(serializers.ModelSerializer):
 class ProductoDetallePublicoSerializer(serializers.ModelSerializer):
     estado = serializers.CharField(source="fk_estado.nombre", read_only=True)
     imagen_url = serializers.SerializerMethodField()
- 
+    
     # Datos de contacto condicionados por los flags del vendedor
     nombre_vendedor = serializers.SerializerMethodField()
     telefono_vendedor = serializers.SerializerMethodField()

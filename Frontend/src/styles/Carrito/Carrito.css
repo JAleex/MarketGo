@@ -1,0 +1,286 @@
+/* ════════════════════════════════════════════════════════════════════
+   Carrito  —  MarketGo
+   Paleta: fondo #F4F4F4 · blanco #FFF · negro #111 · amarillo #FFD600
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Layout de dos columnas ─────────────────────────────────────── */
+.carr-layout {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  align-items: start;
+  padding: 8px 0 40px;
+  font-family: "Poppins", sans-serif;
+}
+
+@media (max-width: 860px) {
+  .carr-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Lista de productos ─────────────────────────────────────────── */
+.carr-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Empty state ────────────────────────────────────────────────── */
+.carr-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 72px 20px;
+  background: #fff;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.carr-empty-icon  { font-size: 52px; color: #CFCFCF; margin-bottom: 14px; }
+.carr-empty-titulo{ font-size: 17px; font-weight: 600; color: #444; margin: 0 0 6px; }
+.carr-empty-sub   { font-size: 13px; color: #AAAAAA; margin: 0; }
+
+/* ── Grupo por vendedor ─────────────────────────────────────────── */
+.carr-grupo {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  animation: carrFadeIn 0.3s both ease-out;
+}
+
+@keyframes carrFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.carr-grupo-header {
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  border-bottom: 1px solid #F0F0F0;
+  background: #FAFAFA;
+}
+
+.carr-grupo-items {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Ítem individual ────────────────────────────────────────────── */
+.carr-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #F4F4F4;
+  transition: background 0.15s;
+}
+.carr-item:last-child { border-bottom: none; }
+.carr-item:hover      { background: #FAFAFA; }
+
+/* Imagen */
+.carr-item-img {
+  width: 70px;
+  height: 70px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #EFEFEF;
+  border: 1px solid #E8E8E8;
+}
+.carr-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Info */
+.carr-item-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.carr-item-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carr-item-nombre {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botón eliminar (papelera roja) */
+.carr-item-delete {
+  background: none;
+  border: none;
+  color: #E53935;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0 2px;
+  flex-shrink: 0;
+  transition: color 0.15s, transform 0.12s;
+}
+.carr-item-delete:hover {
+  color: #B71C1C;
+  transform: scale(1.15);
+}
+
+.carr-item-precio {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── Contador ── (— 1 +) ────────────────────────────────────────── */
+.carr-item-counter {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: fit-content;
+  border: 1.5px solid #E0E0E0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.carr-counter-btn {
+  background: #fff;
+  border: none;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.carr-counter-btn:hover {
+  background: #F5F5F5;
+  color: #111;
+}
+.carr-counter-btn:active {
+  background: #FFD600;
+  color: #111;
+}
+
+.carr-counter-val {
+  min-width: 36px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  user-select: none;
+  border-left: 1.5px solid #E0E0E0;
+  border-right: 1.5px solid #E0E0E0;
+  padding: 0 6px;
+  line-height: 32px;
+}
+
+/* ── Panel resumen ──────────────────────────────────────────────── */
+.carr-resumen {
+  position: sticky;
+  top: 80px;
+}
+
+.carr-resumen-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.carr-resumen-titulo {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 4px;
+}
+
+.carr-resumen-hr {
+  border: none;
+  border-top: 1px solid #EFEFEF;
+  margin: 12px 0;
+}
+
+.carr-resumen-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 18px;
+}
+.carr-resumen-fila strong {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+}
+
+/* Botón realizar pedido */
+.carr-btn-pedido {
+  width: 100%;
+  background: #111;
+  color: #FFD600;
+  border: none;
+  border-radius: 9px;
+  padding: 12px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.18s, transform 0.12s;
+}
+.carr-btn-pedido:hover:not(:disabled) {
+  background: #2a2a2a;
+  transform: translateY(-1px);
+}
+.carr-btn-pedido:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.carr-resumen-hint {
+  font-size: 11px;
+  color: #AAAAAA;
+  text-align: center;
+  margin: 10px 0 0;
+}
+
+/* ── Spinner ────────────────────────────────────────────────────── */
+.carr-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,214,0,0.3);
+  border-top-color: #FFD600;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

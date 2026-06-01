@@ -20,7 +20,7 @@ const DetalleProductoCliente: React.FC = () => {
   const [producto, setProducto] = useState<ProductoDetalle | null>(null);
   const [cargando, setCargando] = useState(true);
 
-  const { cargarDetalleProducto, formatPrecio, formatFecha } = useHomePage();
+  const { cargarDetalleProducto, formatPrecio, formatFecha, agregarCarrito } = useHomePage();
 
   useEffect(() => {
     if (!pk) return;
@@ -122,8 +122,7 @@ const DetalleProductoCliente: React.FC = () => {
               <button
                 className="hp-btn-carrito"
                 onClick={() => {
-                  /* se conectará al hook de carrito en la siguiente fase */
-                  alert(`Agregar al carrito: producto #${producto.pk_producto}`);
+                  agregarCarrito(producto.pk_producto)
                 }}
               >
                 Agregar al Carrito

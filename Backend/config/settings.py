@@ -143,6 +143,7 @@ CORS_ALLOW_METHODS = [
     'PATCH',
     'POST',
     'PUT',
+    'DELETE'
 ]
  
 CORS_ALLOWED_ORIGINS = config(

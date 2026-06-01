@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('usuarios/', include('Usuarios.urls')),
     path('productos/', include('Productos.urls')),
+    path('ventas/', include('Ventas.urls')),
 ]
 
 # Configuración para archivos media (imágenes locales)

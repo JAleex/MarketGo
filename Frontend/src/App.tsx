@@ -8,15 +8,19 @@ import RutasProtegidas from "./components/Permisos/RutasProtegidas";
 import PermisosAdmin from "./pages/Administrador/Permisos/PermisosAdmin";
 import HomePage from "./pages/Clientes/HomePage/HomePage";
 import MisProductos from "./pages/Clientes/MisProductos/MisProductos";
+import Carrito from "./pages/Clientes/Carrito/Carrito";
 import LayoutPrincipal from "./components/LayoutPrincipal/LayoutPrincipal";
 import ProductoDetallePage from "./pages/Clientes/DetalleProductoCliente/DetalleProductoCliente";
 import MiProductoDetallePage from "./pages/Clientes/MisProductos/DetalleMiProducto";
+import Ventas from "./pages/Clientes/Ventas/Ventas";
 
 const rutas: Record<string, React.ComponentType> = {
   "/accesos": PermisosAdmin,
   "/usuarios": Usuarios,
   "/inicio": HomePage,
-  "/misproductos": MisProductos
+  "/misproductos": MisProductos,
+  "/carrito": Carrito,
+  "/misventas": Ventas,
 };
 
 const App: React.FC = () => {
