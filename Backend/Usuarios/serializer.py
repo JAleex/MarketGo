@@ -262,3 +262,39 @@ class UsuariosUpdateSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+
+class ActualizarMiPerfilSerializer(serializers.ModelSerializer):
+    """Serializer para que el usuario actualice su propio perfil"""
+    contrasena = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    nombre     = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    telefono   = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+    numero_identificacion = serializers.CharField(required=False, allow_blank=True, allow_null=True)
+
+    class Meta:
+        model  = Usuarios
+        fields = ['nombre', 'usuario', 'correo', 'telefono', 'numero_identificacion', 'contrasena']
+
+    def validate_correo(self, value):
+        if Usuarios.objects.filter(correo=value).exclude(pk_usuario=self.instance.pk_usuario).exists():
+            raise serializers.ValidationError("Este correo ya está registrado")
+        return value
+
+    def validate_usuario(self, value):
+        if Usuarios.objects.filter(usuario=value).exclude(pk_usuario=self.instance.pk_usuario).exists():
+            raise serializers.ValidationError("Este nombre de usuario ya está en uso")
+        return value
+
+    def validate_numero_identificacion(self, value):
+        if value and Usuarios.objects.filter(numero_identificacion=value).exclude(pk_usuario=self.instance.pk_usuario).exists():
+            raise serializers.ValidationError("Este número de identificación ya está registrado")
+        return value
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop('contrasena', None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        if password:
+            instance.set_password(password)
+        instance.save()
+        return instance

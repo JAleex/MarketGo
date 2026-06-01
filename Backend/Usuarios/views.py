@@ -182,10 +182,11 @@ class getEstadosView(ListAPIView):
 
 
 class MiPerfilView(APIView):
-    permission_classes = [IsAuthenticated]  
+    permission_classes = [IsAuthenticated]
+
     def get(self, request):
         try:
-            usuario = request.user 
+            usuario = request.user
             serializer = MiPerfilSerializer(usuario)
             return api_response(
                 message="Información del perfil obtenida exitosamente",
@@ -196,6 +197,31 @@ class MiPerfilView(APIView):
         except Exception as e:
             return api_response(
                 message=f"Error al obtener información del usuario: {str(e)}",
+                status_type="error",
+                http_status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    def patch(self, request):
+        try:
+            from .serializer import ActualizarMiPerfilSerializer
+            serializer = ActualizarMiPerfilSerializer(request.user, data=request.data, partial=True)
+            if not serializer.is_valid():
+                errores = {k: (v[0] if isinstance(v, list) else v) for k, v in serializer.errors.items()}
+                return api_response(
+                    "Error en la validación",
+                    status_type="error",
+                    http_status=status.HTTP_400_BAD_REQUEST,
+                    data=errores
+                )
+            usuario_actualizado = serializer.save()
+            return api_response(
+                "Perfil actualizado exitosamente",
+                http_status=status.HTTP_200_OK,
+                data=MiPerfilSerializer(usuario_actualizado).data
+            )
+        except Exception as e:
+            return api_response(
+                message=f"Error al actualizar el perfil: {str(e)}",
                 status_type="error",
                 http_status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )

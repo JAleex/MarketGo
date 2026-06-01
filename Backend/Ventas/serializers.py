@@ -88,3 +88,47 @@ class VentaSerializer(serializers.ModelSerializer):
         if not obj.comprador:
             return None
         return obj.comprador.correo
+
+
+class DetallePedidoSerializer(serializers.ModelSerializer):
+    producto_nombre = serializers.CharField(source="fk_producto.nombre",  read_only=True)
+    producto_precio = serializers.DecimalField(
+        source="fk_producto.precio", max_digits=12, decimal_places=2, read_only=True
+    )
+    pk_producto     = serializers.IntegerField(source="fk_producto.pk_producto", read_only=True)
+    imagen_url      = serializers.SerializerMethodField()
+    estado_nombre   = serializers.CharField(source="fk_estado.nombre", read_only=True)
+
+    class Meta:
+        model  = DetallePedidos
+        fields = [
+            "pk_detalle_pedido",
+            "pk_producto",
+            "producto_nombre",
+            "producto_precio",
+            "imagen_url",
+            "cantidad_producto",
+            "total_pedido",
+            "estado_nombre",
+        ]
+
+    def get_imagen_url(self, obj):
+        request = self.context.get("request")
+        if obj.fk_producto.ruta_imagen and request:
+            return request.build_absolute_uri(f"/media/{obj.fk_producto.ruta_imagen}")
+        return None
+
+
+class PedidoSerializer(serializers.ModelSerializer):
+    estado_nombre = serializers.CharField(source="fk_estado.nombre", read_only=True)
+
+    class Meta:
+        model  = Pedidos
+        fields = [
+            "pk_pedido",
+            "cantidad_productos",
+            "fecha_pedido",
+            "total_pedido",
+            "fk_estado",
+            "estado_nombre",
+        ]

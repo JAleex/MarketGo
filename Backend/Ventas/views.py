@@ -7,7 +7,7 @@ from Productos.models import Productos
 from Usuarios.models import Estado
 from Ventas.models import Carrito, Pedidos, DetallePedidos, Venta
 from Utils.responses import api_response
-from .serializers import AgregarAlCarritoSerializer, CarritoItemSerializer, VentaSerializer
+from .serializers import AgregarAlCarritoSerializer, CarritoItemSerializer, VentaSerializer, PedidoSerializer, DetallePedidoSerializer
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
@@ -232,8 +232,79 @@ class CambiarEstadoVentaView(APIView):
         venta.fk_estado = nuevo_estado
         venta.save()
 
+        # Propagar el estado al DetallePedidos y al Pedido padre
+        if venta.comprador:
+            detalles = (
+                DetallePedidos.objects
+                .filter(
+                    fk_producto=venta.fk_producto,
+                    fk_pedido__fk_usuario=venta.comprador,
+                )
+                .select_related("fk_pedido")
+            )
+
+            pedidos_afectados = set()
+            for detalle in detalles:
+                detalle.fk_estado = nuevo_estado
+                detalle.save()
+                pedidos_afectados.add(detalle.fk_pedido)
+
+            # Si todos los detalles del pedido tienen el mismo estado, actualizar el pedido
+            for pedido in pedidos_afectados:
+                estados_detalles = set(
+                    DetallePedidos.objects
+                    .filter(fk_pedido=pedido)
+                    .values_list("fk_estado_id", flat=True)
+                )
+                if len(estados_detalles) == 1:
+                    pedido.fk_estado = nuevo_estado
+                    pedido.save()
+
         return api_response(
             "Estado actualizado",
             data=VentaSerializer(venta).data,
             http_status=status.HTTP_200_OK,
         )
+
+
+class MisPedidosView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        qs = (
+            Pedidos.objects
+            .filter(fk_usuario=request.user)
+            .select_related("fk_estado")
+            .order_by("-fecha_pedido")
+        )
+
+        estado = request.query_params.get("estado")
+        if estado:
+            qs = qs.filter(fk_estado__pk=estado)
+
+        fecha = request.query_params.get("fecha")
+        if fecha:
+            qs = qs.filter(fecha_pedido__date=fecha)
+
+        data = PedidoSerializer(qs, many=True).data
+        return api_response("Pedidos obtenidos", data=data, http_status=status.HTTP_200_OK)
+
+
+class DetallePedidoView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        try:
+            pedido = Pedidos.objects.get(pk=pk, fk_usuario=request.user)
+        except Pedidos.DoesNotExist:
+            return api_response("Pedido no encontrado", http_status=status.HTTP_404_NOT_FOUND)
+
+        detalles = (
+            DetallePedidos.objects
+            .filter(fk_pedido=pedido)
+            .select_related("fk_producto", "fk_estado")
+        )
+        data = DetallePedidoSerializer(
+            detalles, many=True, context={"request": request}
+        ).data
+        return api_response("Detalle obtenido", data=data, http_status=status.HTTP_200_OK)

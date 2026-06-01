@@ -13,6 +13,8 @@ import LayoutPrincipal from "./components/LayoutPrincipal/LayoutPrincipal";
 import ProductoDetallePage from "./pages/Clientes/DetalleProductoCliente/DetalleProductoCliente";
 import MiProductoDetallePage from "./pages/Clientes/MisProductos/DetalleMiProducto";
 import Ventas from "./pages/Clientes/Ventas/Ventas";
+import MisPedidos from "./pages/Clientes/MisPedidos/MisPedidos";
+import InfoPersonal from "./pages/Clientes/InfoPersonal/InfoPersonal";
 
 const rutas: Record<string, React.ComponentType> = {
   "/accesos": PermisosAdmin,
@@ -21,6 +23,8 @@ const rutas: Record<string, React.ComponentType> = {
   "/misproductos": MisProductos,
   "/carrito": Carrito,
   "/misventas": Ventas,
+  "/mispedidos": MisPedidos,
+  "/informacionpersonal": InfoPersonal,
 };
 
 const App: React.FC = () => {
