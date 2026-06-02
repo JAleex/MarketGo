@@ -82,13 +82,6 @@ const Login: React.FC = () => {
                             </button>
 
                             <div className="text-center mt-4">
-                                <span
-                                    className="textpass"
-                                    style={{ cursor: "pointer",  marginRight: "105px" }}
-                                    onClick={() => navigate("/recuperar_contrasena")}
-                                >
-                                    ¿Olvidó su Contraseña?
-                                </span>
                                 <span className="textpass" style={{ cursor: "pointer" }} onClick={() => navigate("/registro")}>
                                     Registrarse
                                 </span>

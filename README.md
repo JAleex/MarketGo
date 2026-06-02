@@ -259,8 +259,6 @@ La documentación interactiva de la API está disponible en:
 | POST | `/usuarios/logout/` | Cerrar sesión | Sí |
 | GET | `/usuarios/chequeo-autenticacion/` | Verificar sesión activa | Sí |
 | POST | `/usuarios/crear-usuario/` | Registro de nuevo usuario | No |
-| POST | `/usuarios/recuperar-contrasena/` | Solicitar recuperación de contraseña | No |
-| POST | `/usuarios/restablecer-contrasena/<uid>/<token>/` | Restablecer contraseña | No |
 
 ### Perfil de usuario (`/usuarios/`)
 | Método | Endpoint | Descripción | Autenticación |

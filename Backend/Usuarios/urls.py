@@ -12,9 +12,6 @@ urlpatterns = [
     path('estados/', getEstadosView.as_view(), name='estados-lista'),
     path("mi-perfil/", MiPerfilView.as_view(), name="mi_perfil"),
     
-    path("recuperar-contrasena/", RecuperarContrasenaAPIView.as_view(), name="recuperar_contrasena"),
-    path("restablecer-contrasena/<uidb64>/<token>/", ResetearPasswordAPIView.as_view(), name="restablecer_password"),
-
     path('vistas/', VistaListCreateView.as_view(), name='vistas-list-create'),
     path('vistas/<int:pk>/', VistaDetailView.as_view(), name='vistas-detail'),
     path('permisos-rol/', PermisoRolListView.as_view(), name='permisos-rol-list'),
