@@ -37,9 +37,24 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'drf_spectacular',
 ]
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'MarketGo API',
+    'DESCRIPTION': (
+        'API REST para la plataforma MarketGo. '
+        'Autenticación mediante JWT en cookies HttpOnly. '
+        'Todos los endpoints protegidos requieren sesión activa.'
+    ),
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SCHEMA_PATH_PREFIX': r'/(usuarios|productos|ventas)/',
+}
+
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'Usuarios.authentication.CustomJWTAuthenticationFromCookie',
         'rest_framework_simplejwt.authentication.JWTAuthentication',

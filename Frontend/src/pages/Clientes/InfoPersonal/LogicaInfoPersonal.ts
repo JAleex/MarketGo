@@ -5,6 +5,7 @@ import { Alerts } from "../../../components/Alertas/alertas";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+/** Datos de perfil del usuario autenticado tal como los devuelve el backend. */
 export interface InfoUsuario {
   pk_usuario:           number;
   usuario:              string;
@@ -16,12 +17,14 @@ export interface InfoUsuario {
   estado:               string;
 }
 
+/** Campos editables del formulario de actualización de perfil. */
 export interface FormPerfil {
   nombre:               string;
   usuario:              string;
   correo:               string;
   telefono:             string;
   numero_identificacion: string;
+  /** Si está vacío al guardar, el backend no modifica la contraseña. */
   contrasena:           string;
 }
 
@@ -44,6 +47,17 @@ const FORM_VACIO: FormPerfil = {
 
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
+/**
+ * Hook de lógica para el módulo Información Personal.
+ *
+ * Responsabilidades:
+ * - Cargar y mostrar los datos de perfil del usuario autenticado (GET).
+ * - Abrir un modal editable pre-cargado con los datos actuales.
+ * - Enviar únicamente los campos modificados al backend (PATCH parcial).
+ * - La contraseña solo se incluye en el payload si el campo tiene valor.
+ *
+ * @returns Estado del perfil, control del modal, formulario y handlers.
+ */
 export const LogicaInfoPersonal = () => {
   const [perfil,       setPerfil]       = useState<InfoUsuario | null>(null);
   const [cargando,     setCargando]     = useState(false);
@@ -53,6 +67,10 @@ export const LogicaInfoPersonal = () => {
 
   // ── Carga ────────────────────────────────────────────────────────────────────
 
+  /**
+   * Obtiene los datos del perfil del usuario autenticado.
+   * Los 401/403 se suprimen porque el interceptor de `api.tsx` ya los gestiona.
+   */
   const cargarPerfil = async () => {
     try {
       setCargando(true);
@@ -71,6 +89,10 @@ export const LogicaInfoPersonal = () => {
 
   // ── Modal ────────────────────────────────────────────────────────────────────
 
+  /**
+   * Pre-carga el formulario con los datos actuales del perfil y abre el modal.
+   * No hace nada si el perfil todavía no ha cargado.
+   */
   const abrirModal = () => {
     if (!perfil) return;
     setForm({
@@ -84,6 +106,7 @@ export const LogicaInfoPersonal = () => {
     setModalAbierto(true);
   };
 
+  /** Cierra el modal y restablece el formulario a valores vacíos. */
   const cerrarModal = () => {
     setModalAbierto(false);
     setForm(FORM_VACIO);
@@ -91,11 +114,23 @@ export const LogicaInfoPersonal = () => {
 
   // ── Formulario ───────────────────────────────────────────────────────────────
 
+  /**
+   * Handler genérico para los inputs del formulario.
+   * Actualiza el campo indicado por `name` con el valor del evento.
+   * @param e - Evento de cambio del input.
+   */
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  /**
+   * Envía el formulario al backend con PATCH parcial.
+   *
+   * - El campo `contrasena` solo se incluye si el usuario escribió algo.
+   * - Si la respuesta tiene errores de validación (400), muestra el primer error.
+   * - En éxito, actualiza el perfil en estado local y cierra el modal.
+   */
   const guardarPerfil = async () => {
     try {
       setGuardando(true);

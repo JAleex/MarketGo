@@ -4,6 +4,7 @@ import { Alerts } from "../../../components/Alertas/alertas";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
+/** Representa un pedido realizado por el comprador autenticado. */
 export interface Pedido {
   pk_pedido:          number;
   cantidad_productos: number;
@@ -13,6 +14,7 @@ export interface Pedido {
   estado_nombre:      string;
 }
 
+/** Ítem de detalle dentro de un pedido (un producto específico). */
 export interface DetallePedido {
   pk_detalle_pedido: number;
   pk_producto:       number;
@@ -24,6 +26,7 @@ export interface DetallePedido {
   estado_nombre:     string;
 }
 
+/** Opción de estado para el filtro desplegable. */
 export interface EstadoOption {
   pk_estado: number;
   nombre:    string;
@@ -43,8 +46,20 @@ const authCfg = () => ({ withCredentials: true });
 
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
+/**
+ * Hook de lógica para el módulo Mis Pedidos.
+ *
+ * Responsabilidades:
+ * - Cargar la lista de pedidos con filtros **servidor** (estado, fecha).
+ * - Aplicar búsqueda libre **cliente** sobre los resultados (pk, nombre de estado).
+ * - Mostrar el detalle de un pedido en un modal con sus `DetallePedidos`.
+ *
+ * @returns Estado reactivo y handlers para el componente `MisPedidos.tsx`.
+ */
 export const LogicaMisPedidos = () => {
+  /** Copia original sin filtrar; sirve como fuente para la búsqueda cliente. */
   const [pedidosOriginales, setPedidosOriginales] = useState<Pedido[]>([]);
+  /** Lista visible (después de aplicar `searchTerm` sobre `pedidosOriginales`). */
   const [pedidos, setPedidos]                     = useState<Pedido[]>([]);
   const [cargando, setCargando]                   = useState(false);
   const [estados, setEstados]                     = useState<EstadoOption[]>([]);
@@ -62,6 +77,10 @@ export const LogicaMisPedidos = () => {
 
   // ── Carga de estados ─────────────────────────────────────────────────────────
 
+  /**
+   * Carga todos los estados disponibles desde el servidor.
+   * Se ejecuta una sola vez al montar el hook.
+   */
   const cargarEstados = async () => {
     try {
       const res = await api.get(ENDPOINTS.estados, authCfg());
@@ -72,6 +91,10 @@ export const LogicaMisPedidos = () => {
 
   // ── Carga de pedidos (con filtros servidor) ──────────────────────────────────
 
+  /**
+   * Carga los pedidos del comprador autenticado aplicando los filtros servidor.
+   * Se re-ejecuta cada vez que cambian `filtroEstado` o `filtroFecha`.
+   */
   const cargarPedidos = async () => {
     try {
       setCargando(true);
@@ -97,6 +120,10 @@ export const LogicaMisPedidos = () => {
 
   // ── Búsqueda cliente ─────────────────────────────────────────────────────────
 
+  /**
+   * Filtra `pedidosOriginales` por el texto libre introducido en `searchTerm`.
+   * Compara contra: pk del pedido y nombre del estado.
+   */
   useEffect(() => {
     if (!searchTerm.trim()) {
       setPedidos(pedidosOriginales);
@@ -114,16 +141,23 @@ export const LogicaMisPedidos = () => {
 
   // ── Limpiar filtros ──────────────────────────────────────────────────────────
 
+  /** Restablece los tres filtros (búsqueda, estado y fecha) a su valor inicial. */
   const limpiarFiltros = () => {
     setSearchTerm("");
     setFiltroEstado("");
     setFiltroFecha("");
   };
 
+  /** `true` cuando al menos uno de los tres filtros tiene valor. */
   const hayFiltrosActivos = !!(searchTerm || filtroEstado || filtroFecha);
 
   // ── Abrir modal con detalle ──────────────────────────────────────────────────
 
+  /**
+   * Abre el modal de detalle y carga los `DetallePedidos` del pedido seleccionado.
+   * El modal se muestra inmediatamente con spinner mientras llega la respuesta.
+   * @param pedido - Pedido del cual se quiere ver el detalle.
+   */
   const abrirDetalle = async (pedido: Pedido) => {
     setPedidoSel(pedido);
     setDetalles([]);
@@ -139,6 +173,7 @@ export const LogicaMisPedidos = () => {
     }
   };
 
+  /** Cierra el modal y limpia el estado del detalle. */
   const cerrarModal = () => {
     setModalAbierto(false);
     setPedidoSel(null);
@@ -147,6 +182,11 @@ export const LogicaMisPedidos = () => {
 
   // ── Helpers de formato ───────────────────────────────────────────────────────
 
+  /**
+   * Formatea un valor numérico como moneda COP sin decimales.
+   * @param valor - Precio en string o número.
+   * @returns Cadena formateada, p. ej. `"$ 12.000"`.
+   */
   const formatPrecio = (valor: string | number) =>
     new Intl.NumberFormat("es-CO", {
       style:                 "currency",
@@ -154,6 +194,11 @@ export const LogicaMisPedidos = () => {
       maximumFractionDigits: 0,
     }).format(Number(valor));
 
+  /**
+   * Convierte una fecha ISO a formato local `DD/MM/AAAA`.
+   * @param fecha - String de fecha en formato ISO 8601.
+   * @returns Fecha formateada en `es-CO`.
+   */
   const formatFecha = (fecha: string) =>
     new Date(fecha).toLocaleDateString("es-CO", {
       day:   "2-digit",
