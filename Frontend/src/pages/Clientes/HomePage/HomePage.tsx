@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import PantallaCarga from "../../../components/PantallaCarga/PantallaCarga";
 import { useHomePage } from "./LogicaHomePage";
@@ -48,8 +48,6 @@ const ProductoCard: React.FC<{
 // ─── Componente principal ─────────────────────────────────────────────────────
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
-  const toggleNavbar = useCallback(() => setIsNavbarVisible((p) => !p), []);
 
   const {
     productos,

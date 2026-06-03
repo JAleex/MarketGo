@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import PantallaCarga from "../../../components/PantallaCarga/PantallaCarga";
 import { LogicaCarrito } from "./LogicaCarrito";
 import type { CarritoItem } from "./LogicaCarrito";

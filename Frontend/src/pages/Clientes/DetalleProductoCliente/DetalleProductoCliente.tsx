@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PantallaCarga from "../../../components/PantallaCarga/PantallaCarga";
 import { useHomePage } from "../HomePage/LogicaHomePage";
@@ -14,8 +14,6 @@ const IMG_PLACEHOLDER =
 const DetalleProductoCliente: React.FC = () => {
   const { pk } = useParams<{ pk: string }>();
   const navigate = useNavigate();
-  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
-  const toggleNavbar = useCallback(() => setIsNavbarVisible((p) => !p), []);
 
   const [producto, setProducto] = useState<ProductoDetalle | null>(null);
   const [cargando, setCargando] = useState(true);
