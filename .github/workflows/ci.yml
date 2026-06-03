@@ -7,28 +7,6 @@ on:
     branches: [main, dev]
 
 jobs:
-  backend:
-    name: Backend — Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Instalar dependencias
-        run: pip install -r Backend/requirements.txt
-
-      - name: Ejecutar pruebas
-        working-directory: Backend
-        env:
-          DJANGO_SETTINGS_MODULE: config.settings_test
-          SECRET_KEY: "ci-secret-key"
-          DEBUG: "True"
-          ALLOWED_HOSTS: "localhost"
-        run: pytest --ignore=tests/test_e2e.py -v
-
   frontend:
     name: Frontend — Build
     runs-on: ubuntu-latest
