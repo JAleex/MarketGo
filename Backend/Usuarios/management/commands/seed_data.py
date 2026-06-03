@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from Usuarios.models import Estado, Rol, Vista, PermisoRol
+from Usuarios.models import Estado, Rol, Vista, PermisoRol, Usuarios
 
 
 class Command(BaseCommand):
@@ -88,5 +88,43 @@ class Command(BaseCommand):
             )
             if created:
                 self.stdout.write(f"  PermisoRol creado: rol={fk_rol} vista={fk_vista} acceso={tiene_acceso}")
+
+        # ── Usuarios ──────────────────────────────────────────────────────────
+        rol_admin   = Rol.objects.get(pk_rol=1)
+        rol_usuario = Rol.objects.get(pk_rol=2)
+
+        usuarios = [
+            {
+                "correo": "admin@example.com",
+                "usuario": "admin",
+                "contrasena": "pbkdf2_sha256$600000$icOe6aSIF8T0cNBnyaqMq4$WNcCH3ctqRaJoCtC/bWihis//OfAY3vngBTOBVlkDCM=",
+                "numero_identificacion": "1",
+                "telefono": "1",
+                "nombre": "admin",
+                "is_active": True,
+                "is_staff": False,
+                "is_anonymous": False,
+                "fk_estado": e_activo,
+                "fk_rol": rol_admin,
+            },
+            {
+                "correo": "cliente@example.com",
+                "usuario": "cliente",
+                "contrasena": "pbkdf2_sha256$600000$5aZjiUku0coSg8520dUzQY$9lGWbdn9+spP7N+aeR8SaomG2n0bgztbM+oiDeakXMQ=",
+                "numero_identificacion": "2",
+                "telefono": "123",
+                "nombre": "cliente",
+                "is_active": True,
+                "is_staff": False,
+                "is_anonymous": False,
+                "fk_estado": e_activo,
+                "fk_rol": rol_usuario,
+            },
+        ]
+        for data in usuarios:
+            correo = data.pop("correo")
+            _, created = Usuarios.objects.get_or_create(correo=correo, defaults=data)
+            if created:
+                self.stdout.write(f"  Usuario creado: {correo}")
 
         self.stdout.write(self.style.SUCCESS("Seed completado."))
