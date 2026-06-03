@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import PantallaCarga from "../../../components/PantallaCarga/PantallaCarga";
 import Modal from "../../../components/Modales/Modal";
@@ -64,15 +64,13 @@ const MisProductos: React.FC = () => {
   const {
     productos, cargando,
     searchTerm, setSearchTerm,
-    minPrecio, setMinPrecio,
-    maxPrecio, setMaxPrecio,
     hayFiltrosActivos, limpiarFiltros,
     handleToggleEstado,
     formatPrecio,
     // modal crear
     isModalOpen, abrirModalCrear, cerrarModal,
     form, erroresForm, guardando,
-    imagenPreview, fileInputRef,
+    imagenPreview, setImagenFile, fileInputRef,
     handleFormChange, handleImagenChange, handleCrearProducto,
   } = LogicaMisProductos();
 

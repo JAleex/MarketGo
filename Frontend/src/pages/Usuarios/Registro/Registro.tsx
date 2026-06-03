@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { LogicaRegistro } from "./LogicaRegistro.ts";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../../../styles/Usuarios/login.css";
 import PantallaCarga from "../../../components/PantallaCarga/PantallaCarga.tsx";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { FaRegUser, FaEye, FaEyeSlash,  } from "react-icons/fa";
-import api from "../../../api.tsx";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Registro: React.FC = () => {
