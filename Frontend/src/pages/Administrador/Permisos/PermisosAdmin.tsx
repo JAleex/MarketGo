@@ -6,6 +6,7 @@ import "../../../styles/Shared/shared.css";
 import "../../../styles/Administrador/PermisosAdmin.css";
 import shared from "../../../styles/Shared/shared.module.css";
 import { FaPlus, FaPencilAlt, FaToggleOn, FaToggleOff, FaEye, FaCog } from "react-icons/fa";
+import Swal, { type SweetAlertResult } from "sweetalert2";
 
 type Vista = {
   pk_vista: number;
@@ -79,7 +80,7 @@ const PermisosAdmin: React.FC = () => {
         confirmButtonText: "Sí, descartar",
         cancelButtonText: "Cancelar",
         confirmButtonColor: "#172b4d",
-      }).then((result) => {
+      }).then((result: SweetAlertResult) => {
         if (result.isConfirmed) {
           descartarCambiosPermisos();
           setIsModalPermisosUsuariosOpen(false);

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import "../../../styles/Shared/shared.css"
 import "../../../styles/Administrador/EvaluadoresAdmin.css"
 import TablasConPaginacion from "../../../components/Tablas/TablasConPaginacion";
@@ -11,14 +11,7 @@ import PantallaCarga from '../../../components/PantallaCarga/PantallaCarga';
 import shared from "../../../styles/Shared/shared.module.css"
 
 const UsuariosAdmin: React.FC = () => {
-    const [isNavbarVisible, setIsNavbarVisible] = useState(true);
-    
-    const toggleNavbar = () => {
-        setIsNavbarVisible(!isNavbarVisible);
-    };
-
     const {
-        estados,
         isModalOpen,
         setIsModalOpen,
         errores,
@@ -41,8 +34,6 @@ const UsuariosAdmin: React.FC = () => {
         statusFilter,
         setStatusFilter,
         Cargando,
-        dataUsuariosPanel,
-        setDataUsuariosPanel,
         obtenerEstados,
     } = LogicaUsuariosAdmin();
 

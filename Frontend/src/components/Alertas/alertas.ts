@@ -1,5 +1,4 @@
 import Swal from "sweetalert2";
-import type { SweetAlertIcon } from "sweetalert2";
 import "../../styles/Alerts/Alerts.css";
 
 interface DetailRow {
