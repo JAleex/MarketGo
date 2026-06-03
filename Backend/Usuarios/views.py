@@ -62,22 +62,13 @@ class CustomTokenObtainPairView(APIView):
         data = serializer.validated_data
         response = api_response("Login exitoso", data=data["user"])
 
-        response.set_cookie(
-            "access_token",
-            data["access"],
+        set_auth_cookie(
+            response, "access_token", data["access"],
             max_age=settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"].total_seconds(),
-            httponly=True,
-            secure=not settings.DEBUG,
-            samesite="Lax",
         )
-
-        response.set_cookie(
-            "refresh_token",
-            data["refresh"],
+        set_auth_cookie(
+            response, "refresh_token", data["refresh"],
             max_age=settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds(),
-            httponly=True,
-            secure=not settings.DEBUG,
-            samesite="Lax",
         )
 
         return response
@@ -96,22 +87,13 @@ class RefreshAccessTokenFromCookie(APIView):
 
             response = api_response("Token refrescado")
 
-            response.set_cookie(
-                "access_token",
-                str(refresh.access_token),
+            set_auth_cookie(
+                response, "access_token", str(refresh.access_token),
                 max_age=settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"].total_seconds(),
-                httponly=True,
-                secure=not settings.DEBUG,
-                samesite="Lax",
             )
-
-            response.set_cookie(
-                "refresh_token",
-                str(refresh),
+            set_auth_cookie(
+                response, "refresh_token", str(refresh),
                 max_age=settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds(),
-                httponly=True,
-                secure=not settings.DEBUG,
-                samesite="Lax",
             )
 
             return response

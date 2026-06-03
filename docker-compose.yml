@@ -1,0 +1,63 @@
+services:
+
+  # ── Base de datos PostgreSQL ─────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    container_name: db_marketgo
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-marketgo}
+      POSTGRES_USER: ${POSTGRES_USER:-marketgo}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-marketgo}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - RED_MARKETGO
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-marketgo}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Backend Django / DRF ─────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: backend_marketgo
+    env_file:
+      - ./Backend/.env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-marketgo}:${POSTGRES_PASSWORD:-marketgo}@db:5432/${POSTGRES_DB:-marketgo}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - RED_MARKETGO
+    restart: unless-stopped
+
+  # ── Frontend React + Vite (build de producción servido con Nginx) ────────────
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+        VITE_FRONT_END_URL: ${VITE_FRONT_END_URL:-http://localhost}
+    container_name: frontend_marketgo
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - RED_MARKETGO
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  RED_MARKETGO:
+    driver: bridge
