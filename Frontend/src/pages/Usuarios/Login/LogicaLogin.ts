@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import { Alerts } from "../../../components/Alertas/alertas";
 
@@ -13,7 +12,6 @@ import { Alerts } from "../../../components/Alertas/alertas";
  * @returns Estado del formulario, manejadores de eventos y flag de carga.
  */
 export const LogicaLogin = () => {
-    const navigate = useNavigate();
     const { login } = useAuth();
     const [Cargando, setCargando] = useState(false);
     const [formData, setFormData] = useState({ correo: "", password: "" });

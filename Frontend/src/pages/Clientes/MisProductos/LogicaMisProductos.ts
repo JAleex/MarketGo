@@ -21,6 +21,9 @@ export interface ProductoDetalle extends ProductoCard {
   nombre_vendedor: string | null;
   telefono_vendedor: string | null;
   correo_vendedor: string | null;
+  muestra_nombre: boolean;
+  muestra_telefono: boolean;
+  muestra_correo: boolean;
 }
 
 // Form de creación
@@ -77,7 +80,7 @@ export const LogicaMisProductos = () => {
   // ── Modal crear producto ─────────────────────────────────────────────────────
   const [isModalOpen, setIsModalOpen]       = useState(false);
   const [form, setForm]                     = useState<ProductoForm>(FORM_VACIO);
-  const [erroresForm, setErroresForm]       = useState<Partial<ProductoForm>>({});
+  const [erroresForm, setErroresForm]       = useState<Partial<Record<keyof ProductoForm, string>>>({});
   const [guardando, setGuardando]           = useState(false);
   const [imagenFile, setImagenFile]         = useState<File | null>(null);
   const [imagenPreview, setImagenPreview]   = useState<string | null>(null);
@@ -322,6 +325,7 @@ export const LogicaMisProductos = () => {
     erroresForm,
     guardando,
     imagenPreview,
+    setImagenFile,
     fileInputRef,
     handleFormChange,
     handleImagenChange,
