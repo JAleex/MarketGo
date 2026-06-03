@@ -10,6 +10,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+RUN mkdir -p static
+
 EXPOSE 8000
 
 # Gunicorn para producción (3 workers síncronos)
