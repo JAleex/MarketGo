@@ -8,7 +8,7 @@ echo "==> Insertando datos base..."
 python manage.py seed_data
 
 echo "==> Reseteando secuencias de PK..."
-python manage.py sqlsequencereset Usuarios Productos Ventas | python manage.py dbshell
+python manage.py reset_sequences
 
 echo "==> Iniciando servidor..."
 exec gunicorn config.wsgi:application \
