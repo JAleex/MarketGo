@@ -2,16 +2,6 @@ import Swal from "sweetalert2";
 import type { SweetAlertIcon } from "sweetalert2";
 import "../../styles/Alerts/Alerts.css";
 
-type AlertType = "success" | "error" | "warning" | "info" | "question" | "pending";
-
-interface AlertOptions {
-  title?: string;
-  text: string;
-  icon?: SweetAlertIcon;
-  timer?: number;
-  confirmText?: string;
-}
-
 interface DetailRow {
   label: string;
   value?: string | number | null;

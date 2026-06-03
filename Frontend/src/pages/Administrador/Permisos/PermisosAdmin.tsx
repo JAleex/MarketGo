@@ -1,12 +1,11 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { LogicaPermisosAdmin } from "./LogicaPermisosAdmin";
 import Modal from "../../../components/Modales/Modal";
 import PantallaCarga from "../../../components/PantallaCarga/PantallaCarga";
 import "../../../styles/Shared/shared.css";
 import "../../../styles/Administrador/PermisosAdmin.css";
 import shared from "../../../styles/Shared/shared.module.css";
-import { FaPlus, FaPencilAlt, FaToggleOn, FaToggleOff, FaEye, FaCog, FaCheck, FaTimes } from "react-icons/fa";
-import Swal from "sweetalert2";
+import { FaPlus, FaPencilAlt, FaToggleOn, FaToggleOff, FaEye, FaCog } from "react-icons/fa";
 
 type Vista = {
   pk_vista: number;
@@ -21,7 +20,7 @@ type Vista = {
 };
 
 const PermisosAdmin: React.FC = () => {
-  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [_isNavbarVisible, _setIsNavbarVisible] = useState(true);
   const [statusFilter, setStatusFilter] = useState<"activo" | "inactivo">("activo");
   const [isModalPermisosUsuariosOpen, setIsModalPermisosUsuariosOpen] = useState(false);
 
@@ -49,12 +48,11 @@ const PermisosAdmin: React.FC = () => {
     rolTieneAcceso,
     guardarCambiosPermisos, 
     descartarCambiosPermisos,
-    hayCambiosPendientes, 
-    esPermisoProtegido, 
-    esVistaProtegida, 
-    handleVerDetallesVista, 
+    hayCambiosPendientes,
+    esPermisoProtegido,
+    esVistaProtegida,
+    handleVerDetallesVista,
     estadoClasses,
-    permisosRolVista
   } = LogicaPermisosAdmin();
 
   const vistasFiltradas = useMemo(() => {

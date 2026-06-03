@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import type { JSX } from "react";
 import Paginacion from "./Paginacion";
 import '../../../src/styles/Tablas/tablas.css';
 
@@ -18,7 +18,6 @@ const TableWithPagination = <T,>({
   data,
   rowsPerPage,
   columns,
-  renderActions,
 }: TableWithPaginationProps<T>) => {
   const {
     currentData,
