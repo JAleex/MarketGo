@@ -1,0 +1,20 @@
+[run]
+source = .
+omit =
+    */migrations/*
+    tests/*
+    */tests/*
+    config/wsgi.py
+    config/asgi.py
+    manage.py
+    */admin.py
+    */__init__.py
+    Utils/email_sender.py
+
+[report]
+show_missing = True
+skip_covered = False
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    raise NotImplementedError
