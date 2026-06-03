@@ -10,4 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Disparar redeploy en Render
+        if: ${{ secrets.RENDER_DEPLOY_HOOK_URL != '' }}
         run: curl --silent --show-error --fail "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
