@@ -215,7 +215,7 @@ export const LogicaPermisosAdmin = () => {
     const { name, value } = e.target;
     let valorFinal: any = value;
     if (name === "fk_estado") valorFinal = Number(value);
-    else if (name === "visible_en_navbar") valorFinal = value === "true" || value === true;
+    else if (name === "visible_en_navbar") valorFinal = value === "true";
     setVistaData((prev) => ({ ...prev, [name]: valorFinal }));
     if (errores[name]) setErrores((prev) => ({ ...prev, [name]: "" }));
   };
@@ -300,7 +300,7 @@ export const LogicaPermisosAdmin = () => {
       rows: [
         { label: "Nombre", value: vista.nombre },
         { label: "Ruta", value: vista.ruta },
-        { label: "Icono", value: vista.icono || "Sin icono", icon: vista.icono || undefined },
+        { label: "Icono", value: vista.icono || "Sin icono" },
         { label: "Estado", value: estadoNombre },
         { label: "Visibilidad", value: visibilidad },
         ...(vista.descripcion ? [{ label: "Descripción", value: vista.descripcion, type: "long" as const }] : []),
