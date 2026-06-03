@@ -314,7 +314,7 @@ const MisProductos: React.FC = () => {
                 onClick={() => {
                   setImagenFile(null);   
                   // limpiamos el preview directo desde el hook
-                  fileInputRef.current && (fileInputRef.current.value = "");
+                  if (fileInputRef.current) fileInputRef.current.value = "";
                 }}
               >
                 <i className="bi bi-x me-1" />Quitar imagen

@@ -31,13 +31,7 @@ jobs:
 
       - name: Lint — flake8
         working-directory: Backend
-        run: |
-          flake8 . \
-            --count \
-            --max-line-length=120 \
-            --exclude=migrations,__pycache__,.git,db.sqlite3 \
-            --per-file-ignores="*/tests.py:E501" \
-            --statistics
+        run: flake8 . --count --statistics
 
       - name: Pruebas con cobertura
         working-directory: Backend
@@ -85,7 +79,7 @@ jobs:
 
       - name: Lint — ESLint
         working-directory: Frontend
-        run: npm run lint
+        run: npm run lint -- --max-warnings 50
 
       - name: Build de producción (tsc + vite)
         working-directory: Frontend

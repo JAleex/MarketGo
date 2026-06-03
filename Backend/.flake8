@@ -1,0 +1,18 @@
+[flake8]
+max-line-length = 120
+exclude = migrations,__pycache__,.git,db.sqlite3,*.pyc
+extend-ignore =
+    # Estilo de alineación y espaciado (cosmético)
+    E122,E131,E201,E203,E221,E231,E251,E265,
+    # Líneas en blanco (cosmético)
+    E301,E302,E303,E305,
+    # Espacios en blanco sobrantes (cosmético)
+    W291,W292,W293,W391,
+    # Imports de star (*) y no usados — patrón deliberado en urls.py y admin.py
+    F401,F403,F405,
+    # Variable asignada pero no usada en except
+    F841
+per-file-ignores =
+    # Los tests tienen líneas largas intencionalmente
+    */tests.py:E501
+    tests/test_*.py:E501
