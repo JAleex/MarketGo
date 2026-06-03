@@ -257,7 +257,7 @@ const PermisosAdmin: React.FC = () => {
 
               <div className="col-md-6">
                 <label htmlFor="visible_en_navbar" className="form-label fw-bold">Visibilidad en Menú</label>
-                <select className="form-select" id="visible_en_navbar" name="visible_en_navbar" onChange={(e) => { const value = e.target.value === "true"; handleInputChangeVista({ target: { name: "visible_en_navbar", value } } as any); }} value={String(vistaData.visible_en_navbar ?? true)}>
+                <select className="form-select" id="visible_en_navbar" name="visible_en_navbar" onChange={handleInputChangeVista} value={String(vistaData.visible_en_navbar ?? true)}>
                   <option value="true">Visible en menú</option>
                   <option value="false">Oculta del menú</option>
                 </select>
