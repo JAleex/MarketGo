@@ -1,61 +1,13 @@
-name: Deploy a Producción
+name: Deploy
 
 on:
   push:
     branches: [main]
 
 jobs:
-  # ────────────────────────────────────────────────────────────────────────────
-  # JOB 1: Deploy Backend → Render
-  # Requiere el secret RENDER_DEPLOY_HOOK_URL configurado en el repositorio.
-  # Se obtiene en: Render Dashboard → tu servicio → Settings → Deploy Hook
-  # ────────────────────────────────────────────────────────────────────────────
-  deploy-backend:
+  backend:
     name: Deploy Backend → Render
     runs-on: ubuntu-latest
-
     steps:
-      - name: Disparar deploy en Render
-        run: |
-          curl --silent --show-error --fail \
-            "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
-          echo "Deploy de backend iniciado en Render."
-
-  # ────────────────────────────────────────────────────────────────────────────
-  # JOB 2: Deploy Frontend → Vercel
-  # Requiere los secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID.
-  # Se obtienen en: vercel.com → Settings → Tokens / Project Settings
-  # ────────────────────────────────────────────────────────────────────────────
-  deploy-frontend:
-    name: Deploy Frontend → Vercel
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout código fuente
-        uses: actions/checkout@v4
-
-      - name: Configurar Node.js 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-          cache-dependency-path: Frontend/package-lock.json
-
-      - name: Instalar dependencias
-        working-directory: Frontend
-        run: npm ci
-
-      - name: Instalar Vercel CLI
-        run: npm install -g vercel@latest
-
-      - name: Deploy a Vercel (producción)
-        working-directory: Frontend
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          vercel deploy --prod \
-            --token=$VERCEL_TOKEN \
-            --build-env VITE_API_URL=${{ secrets.VITE_API_URL }} \
-            --build-env VITE_FRONT_END_URL=${{ secrets.VITE_FRONT_END_URL }}
+      - name: Disparar redeploy en Render
+        run: curl --silent --show-error --fail "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
